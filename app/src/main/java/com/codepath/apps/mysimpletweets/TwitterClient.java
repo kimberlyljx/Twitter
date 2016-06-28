@@ -22,11 +22,12 @@ import org.scribe.builder.api.TwitterApi;
  * 
  */
 public class TwitterClient extends OAuthBaseClient {
-	public static final Class<? extends Api> REST_API_CLASS = TwitterApi.class; // Change this
+
+    public static final Class<? extends Api> REST_API_CLASS = TwitterApi.class; // Change this
 	public static final String REST_URL = "https://api.twitter.com/1.1"; // Change this, base API URL
 	public static final String REST_CONSUMER_KEY = "CBT5YPgCqfLMD1HpVMMuK5jNm";       // Change this
 	public static final String REST_CONSUMER_SECRET = "pUp6bDu0kQbmFdcxXNewAjPd4O8Pmos1edG8FRiWFEugPS7FwR"; // Change this
-	public static final String REST_CALLBACK_URL = "oauth://klimjinx-twitter"; // Change this (here and in manifest)
+	public static final String REST_CALLBACK_URL = "oauth://klimjinx-twitter";
 
 	public TwitterClient(Context context) {
 		super(context, REST_API_CLASS, REST_URL, REST_CONSUMER_KEY, REST_CONSUMER_SECRET, REST_CALLBACK_URL);
@@ -46,7 +47,7 @@ public class TwitterClient extends OAuthBaseClient {
     public void getHomeTimeline(AsyncHttpResponseHandler handler) {
         String apiUrl = getApiUrl("statuses/home_timeline.json");
         RequestParams params = new RequestParams();
-        params.put("count", 25);
+        params.put("count", 5);
         params.put("since_id", 1);
         getClient().get(apiUrl, params, handler);
     }
@@ -66,6 +67,12 @@ public class TwitterClient extends OAuthBaseClient {
         getClient().get(apiUrl, params, handler);
     }
 
+    public void postStatusUpdate(AsyncHttpResponseHandler handler, String text) {
+        String apiUrl = getApiUrl("/statuses/update.json");
+        RequestParams params = new RequestParams();
+        params.put("status", text);
+        getClient().post(apiUrl, params, handler);
+    }
 
 	/* 1. Define the endpoint URL with getApiUrl and pass a relative path to the endpoint
 	 * 	  i.e getApiUrl("statuses/home_timeline.json");

@@ -1,5 +1,6 @@
 package com.codepath.apps.mysimpletweets.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
@@ -34,11 +35,10 @@ public class TimelineActivity extends AppCompatActivity {
     @BindView(R.id.drawer_layout) DrawerLayout mDrawer;
     @BindView(R.id.viewpager) ViewPager viewPager;
     @BindView(R.id.sliding_tabs) TabLayout tabLayout;
+    @BindView(R.id.flContent) FrameLayout frag;
 
-    private FrameLayout frag;
     private ActionBarDrawerToggle drawerToggle;
     private ImageView ivNavProfile;
-
     public static String POSITION = "POSITION";
 
     @Override
@@ -58,8 +58,6 @@ public class TimelineActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timeline);
         ButterKnife.bind(this);
-
-        frag = (FrameLayout) findViewById(R.id.flContent);
 
         setSupportActionBar(toolbar);
         toolbar.setNavigationIcon(R.drawable.ic_hamburger);
@@ -118,7 +116,7 @@ public class TimelineActivity extends AppCompatActivity {
 //        ft.addToBackStack("two");
         // 4. commit the transaction
         ft.commit();
-        getSupportActionBar().setTitle( adapterViewPager.getPageTitle( viewPager.getCurrentItem()) );
+        getSupportActionBar().setTitle( TimelineFragmentPagerAdapter.getTitle( viewPager.getCurrentItem()) );
     }
 
     private void setupDrawerContent(NavigationView navigationView) {
@@ -191,4 +189,8 @@ public class TimelineActivity extends AppCompatActivity {
         super.onPostCreate(savedInstanceState);
     }
 
+    public void composeTweet(View view) {
+        Intent i = new Intent(TimelineActivity.this, ComposeActivity.class);
+        startActivity(i);
+    }
 }
