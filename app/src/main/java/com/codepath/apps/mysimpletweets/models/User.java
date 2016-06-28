@@ -11,6 +11,9 @@ public class User {
     private long uid;
     private String screenName;
     private String profileImageUrl;
+    private String description;
+    private String location;
+    private int followersCount;
 
     public String getName() {
         return name;

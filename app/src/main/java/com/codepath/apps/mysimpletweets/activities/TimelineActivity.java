@@ -31,6 +31,8 @@ public class TimelineActivity extends AppCompatActivity {
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.nvView) NavigationView nvDrawer;
     @BindView(R.id.drawer_layout) DrawerLayout mDrawer;
+    @BindView(R.id.viewpager) ViewPager viewPager;
+    @BindView(R.id.sliding_tabs) TabLayout tabLayout;
 
     private ActionBarDrawerToggle drawerToggle;
     private ImageView ivNavProfile;
@@ -42,6 +44,8 @@ public class TimelineActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         setSupportActionBar(toolbar);
+        toolbar.setNavigationIcon(R.drawable.ic_hamburger);
+
         // Add at runtime b/c (null exceptions) on header lookups
         View headerLayout = nvDrawer.inflateHeaderView(R.layout.nav_header);
         ivNavProfile = (ImageView) headerLayout.findViewById(R.id.ivNavProfile);
@@ -50,16 +54,12 @@ public class TimelineActivity extends AppCompatActivity {
         setupDrawerContent(nvDrawer);
 
         // Get the ViewPager and set it's PagerAdapter so that it can display items
-        ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
-
         adapterViewPager = new TimelineFragmentPagerAdapter(getSupportFragmentManager(),
                 TimelineActivity.this);
         viewPager.setAdapter(adapterViewPager);
 
         // Give the TabLayout the ViewPager
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.sliding_tabs);
         tabLayout.setupWithViewPager(viewPager);
-
 
         // SHOULD THIS BE IN ONCREATE or ONCREATEVIEW
         // Attach the page change listener inside the activity
@@ -146,7 +146,6 @@ public class TimelineActivity extends AppCompatActivity {
                 mDrawer.openDrawer(GravityCompat.START);
                 return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 

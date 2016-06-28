@@ -27,7 +27,7 @@ public class MentionsTimelineFragment extends TweetsListFragment {
 
     // [] at the root is a jsonOBject
     private void populateTimeline() {
-        client.getHomeTimeline(new JsonHttpResponseHandler() {
+        client.getMentionsTimeline(new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
                 // Deserialize Json and load model date into listview'

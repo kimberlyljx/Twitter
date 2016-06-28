@@ -1,9 +1,15 @@
 package com.codepath.apps.mysimpletweets.adapters;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.content.ContextCompat;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.ImageSpan;
 
+import com.codepath.apps.mysimpletweets.R;
 import com.codepath.apps.mysimpletweets.fragments.HomeTimelineFragment;
 import com.codepath.apps.mysimpletweets.fragments.MentionsTimelineFragment;
 
@@ -17,6 +23,14 @@ public class TimelineFragmentPagerAdapter extends SmartFragmentStatePagerAdapter
     public final static int MOMENTS_TAB = 2;
     public final static int NOTIFICATIONS_TAB = 3;
     public final static int MESSAGES_TAB = 4;
+
+    private int[] imageResId = {
+            R.drawable.ic_home,
+            android.R.drawable.ic_input_add,
+            R.drawable.ic_lightning,
+            R.drawable.ic_notifications,
+            R.drawable.ic_messages,
+    };
 
     final int PAGE_COUNT = 5; // 5 tabs
     private String tabTitles[] = new String[] { "Home", "Mentions", "Moments", "Notifications", "Messages" };
@@ -60,6 +74,14 @@ public class TimelineFragmentPagerAdapter extends SmartFragmentStatePagerAdapter
     @Override
     public CharSequence getPageTitle(int position) {
         // Generate title based on item position
-        return tabTitles[position];
+        // return tabTitles[position];
+
+        Drawable image = ContextCompat.getDrawable(context, imageResId[position]);
+        image.setBounds(0, 0, image.getIntrinsicWidth(), image.getIntrinsicHeight());
+        SpannableString sb = new SpannableString(" ");
+        ImageSpan imageSpan = new ImageSpan(image, ImageSpan.ALIGN_BOTTOM);
+        sb.setSpan(imageSpan, 0, 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        return sb;
+
     }
 }
