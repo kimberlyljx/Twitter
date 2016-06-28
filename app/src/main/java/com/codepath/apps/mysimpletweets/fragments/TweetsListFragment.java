@@ -16,17 +16,27 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TweetsListFragment extends Fragment {
+    public static final String ARG_PAGE = "ARG_PAGE";
+    private int mPage;
 
     private List<Tweet> tweets;
     private TweetsArrayAdapter aTweets;
     private ListView lvTweets;
 
+    public static TweetsListFragment newInstance(int page) {
+        Bundle args = new Bundle();
+        args.putInt(ARG_PAGE, page);
+        TweetsListFragment fragment = new TweetsListFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         tweets = new ArrayList<>();
         aTweets = new TweetsArrayAdapter(getActivity(), tweets);
+        mPage = getArguments().getInt(ARG_PAGE);
     }
 
     @Override
