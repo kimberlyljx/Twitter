@@ -23,13 +23,13 @@ public class TweetsListFragment extends Fragment {
     private TweetsArrayAdapter aTweets;
     private ListView lvTweets;
 
-    public static TweetsListFragment newInstance(int page) {
-        Bundle args = new Bundle();
-        args.putInt(ARG_PAGE, page);
-        TweetsListFragment fragment = new TweetsListFragment();
-        fragment.setArguments(args);
-        return fragment;
-    }
+//    public static TweetsListFragment newInstance(int page) {
+//        Bundle args = new Bundle();
+//        args.putInt(ARG_PAGE, page);
+//        TweetsListFragment fragment = new TweetsListFragment();
+//        fragment.setArguments(args);
+//        return fragment;
+//    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {

@@ -18,6 +18,14 @@ public class MentionsTimelineFragment extends TweetsListFragment {
 
     public TwitterClient client;
 
+    public static MentionsTimelineFragment newInstance(int page) {
+        Bundle args = new Bundle();
+        args.putInt(ARG_PAGE, page);
+        MentionsTimelineFragment fragment = new MentionsTimelineFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
