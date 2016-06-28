@@ -12,37 +12,42 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.codepath.apps.mysimpletweets.R;
 import com.codepath.apps.mysimpletweets.adapters.SmartFragmentStatePagerAdapter;
 import com.codepath.apps.mysimpletweets.adapters.TimelineFragmentPagerAdapter;
+import com.codepath.apps.mysimpletweets.fragments.TweetsListFragment;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class TimelineActivity extends AppCompatActivity {
 
     private SmartFragmentStatePagerAdapter adapterViewPager;
 
-    private DrawerLayout mDrawer;
-    private Toolbar toolbar;
-    private NavigationView nvDrawer;
-    private ActionBarDrawerToggle drawerToggle;
+    @BindView(R.id.toolbar) Toolbar toolbar;
+    @BindView(R.id.nvView) NavigationView nvDrawer;
+    @BindView(R.id.drawer_layout) DrawerLayout mDrawer;
 
+    private ActionBarDrawerToggle drawerToggle;
+    private ImageView ivNavProfile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timeline);
+        ButterKnife.bind(this);
 
-        // Set a Toolbar to replace the ActionBar.
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        // Find our drawer view
-        mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        // Find our drawer view
-        nvDrawer = (NavigationView) findViewById(R.id.nvView);
+        // Add at runtime b/c (null exceptions) on header lookups
+        View headerLayout = nvDrawer.inflateHeaderView(R.layout.nav_header);
+        ivNavProfile = (ImageView) headerLayout.findViewById(R.id.ivNavProfile);
+
         // Setup drawer view
         setupDrawerContent(nvDrawer);
-
 
         // Get the ViewPager and set it's PagerAdapter so that it can display items
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
@@ -97,20 +102,22 @@ public class TimelineActivity extends AppCompatActivity {
         Fragment fragment = null;
         Class fragmentClass;
         switch(menuItem.getItemId()) {
-            case R.id.nav_first_fragment:
-                fragmentClass = ProfileFragment.class;
-                break;
-            case R.id.nav_second_fragment:
-                fragmentClass = HighlightsFragment.class;
-                break;
-            case R.id.nav_third_fragment:
-                fragmentClass = ListsFragment.class;
-                break;
-            case R.id.nav_fourth_fragment:
-                fragmentClass = ConnectFragment.class;
-                break;
             default:
-                fragmentClass = ProfileFragment.class;
+                fragmentClass = TweetsListFragment.class;
+//            case R.id.nav_first_fragment:
+//                fragmentClass = ProfileFragment.class;
+//                break;
+//            case R.id.nav_second_fragment:
+//                fragmentClass = HighlightsFragment.class;
+//                break;
+//            case R.id.nav_third_fragment:
+//                fragmentClass = ListsFragment.class;
+//                break;
+//            case R.id.nav_fourth_fragment:
+//                fragmentClass = ConnectFragment.class;
+//                break;
+//            default:
+//                fragmentClass = ProfileFragment.class;
         }
 
         try {
