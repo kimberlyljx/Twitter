@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
@@ -22,7 +21,6 @@ import android.widget.Toast;
 import com.codepath.apps.mysimpletweets.R;
 import com.codepath.apps.mysimpletweets.adapters.SmartFragmentStatePagerAdapter;
 import com.codepath.apps.mysimpletweets.adapters.TimelineFragmentPagerAdapter;
-import com.codepath.apps.mysimpletweets.fragments.TweetsListFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -131,15 +129,15 @@ public class TimelineActivity extends AppCompatActivity {
     }
 
     public void selectDrawerItem(MenuItem menuItem) {
-        // Create a new fragment and specify the fragment to show based on nav item clicked
-        Fragment fragment = null;
-        Class fragmentClass;
+        // Create a new activity to show based on nav item clicked
+//        Fragment fragment = null;
+//        Class activityClass;
+        Intent i;
         switch(menuItem.getItemId()) {
-            default:
-                fragmentClass = TweetsListFragment.class;
-//            case R.id.nav_first_fragment:
-//                fragmentClass = ProfileFragment.class;
-//                break;
+            case R.id.nav_first_fragment:
+                i = new Intent(TimelineActivity.this, ProfileActivity.class);
+                startActivity(i);
+                break;
 //            case R.id.nav_second_fragment:
 //                fragmentClass = HighlightsFragment.class;
 //                break;
@@ -149,24 +147,25 @@ public class TimelineActivity extends AppCompatActivity {
 //            case R.id.nav_fourth_fragment:
 //                fragmentClass = ConnectFragment.class;
 //                break;
-//            default:
-//                fragmentClass = ProfileFragment.class;
+            default:
+                i = new Intent(TimelineActivity.this, ProfileActivity.class);
+                startActivity(i);
         }
 
-        try {
-            fragment = (Fragment) fragmentClass.newInstance();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        // Insert the fragment by replacing any existing fragment
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commit();
-
-        // Highlight the selected item has been done by NavigationView
-        menuItem.setChecked(true);
-        // Set action bar title
-        setTitle(menuItem.getTitle());
+//        try {
+//
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//
+//        // Insert the fragment by replacing any existing fragment
+//        FragmentManager fragmentManager = getSupportFragmentManager();
+//        fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commit();
+//
+//        // Highlight the selected item has been done by NavigationView
+//        menuItem.setChecked(true);
+//        // Set action bar title
+//        setTitle(menuItem.getTitle());
         // Close the navigation drawer
         mDrawer.closeDrawers();
     }

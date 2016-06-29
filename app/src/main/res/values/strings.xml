@@ -13,5 +13,6 @@
     <string name="name">Kimberly Lim</string>
     <string name="message_hint">What\'s happening?</string>
     <string name="send">Tweet</string>
+    <string name="timestamp">Timestamp</string>
 
 </resources>

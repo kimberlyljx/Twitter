@@ -6,7 +6,6 @@ import android.util.Log;
 
 import com.codepath.apps.mysimpletweets.TwitterApplication;
 import com.codepath.apps.mysimpletweets.TwitterClient;
-import com.codepath.apps.mysimpletweets.models.Tweet;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.json.JSONArray;
@@ -41,7 +40,7 @@ public class MentionsTimelineFragment extends TweetsListFragment {
                 // Deserialize Json and load model date into listview'
                 Log.d("JSON", response.toString());
 
-                addAll(Tweet.fromJSONArray(response));
+//                addAll(Tweet.fromJSONArray(response));
             }
 
             @Override

@@ -42,7 +42,8 @@ public class HomeTimelineFragment extends TweetsListFragment {
             public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
                 // Deserialize Json and load model date into listview'
                 Log.d("JSON", response.toString());
-                addAll(Tweet.fromJSONArray(response));
+                tweets.addAll(Tweet.fromJSONArray(response));
+                aTweets.notifyDataSetChanged();
             }
 
             @Override
