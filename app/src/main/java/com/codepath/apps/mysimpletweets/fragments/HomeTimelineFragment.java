@@ -34,7 +34,6 @@ public class HomeTimelineFragment extends TweetsListFragment {
         client = TwitterApplication.getRestClient();
         populateTimeline();
     }
-
     // [] at the root is a jsonOBject
     private void populateTimeline() {
         client.getHomeTimeline(new JsonHttpResponseHandler() {
@@ -42,7 +41,7 @@ public class HomeTimelineFragment extends TweetsListFragment {
             public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
                 // Deserialize Json and load model date into listview'
                 Log.d("JSON", response.toString());
-                tweets.addAll(Tweet.fromJSONArray(response));
+                mTweets.addAll(Tweet.fromJSONArray(response));
                 aTweets.notifyDataSetChanged();
             }
 
@@ -53,4 +52,29 @@ public class HomeTimelineFragment extends TweetsListFragment {
         });
     }
 
+    @Override
+    public void fetchTimelineAsync(int page) {
+        // Send the network request to fetch the updated data
+        // `client` here is an instance of Android Async HTTP
+        client.getHomeTimeline(new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
+                // Remember to CLEAR OUT old items before appending in the new ones
+                aTweets.clear();
+                // ...the data has come back, add new items to your adapter...
+                mTweets.addAll(Tweet.fromJSONArray(response));
+                // Now we call setRefreshing(false) to signal refresh has finished
+                swipeContainer.setRefreshing(false);
+            }
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                Log.d("DEBUG", "Fetch timeline error: " + errorResponse.toString());
+            }
+        });
+    }
+    public void appendTweet(Tweet tweet) {
+        mTweets.add(0, tweet);
+        aTweets.notifyItemInserted(0);
+        rvTweets.scrollToPosition(0);
+    }
 }

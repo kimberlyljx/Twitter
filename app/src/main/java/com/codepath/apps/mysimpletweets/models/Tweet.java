@@ -4,24 +4,19 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-/**
- * Created by klimjinx on 6/27/16.
- */
-
-// parse the JSON, store data, encapsulate
-public class Tweet {
-    private String body;
-    private long uid;
-    private User user;
-    private String createdAt;
-
+public class Tweet implements Serializable {
+    String body;
+    long uid;
+    User user;
+    String createdAt;
 
     public User getUser() {
         return user;
     }
-    // Deserialize
+
     public String getBody() {
         return body;
     }
@@ -36,7 +31,6 @@ public class Tweet {
 
     public static Tweet fromJSON(JSONObject jsonObject) {
         Tweet tweet = new Tweet();
-
         try {
             tweet.body = jsonObject.getString("text");
             tweet.uid = jsonObject.getLong("id");

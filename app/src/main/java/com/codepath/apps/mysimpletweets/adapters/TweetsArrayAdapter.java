@@ -14,6 +14,7 @@ import com.codepath.apps.mysimpletweets.R;
 import com.codepath.apps.mysimpletweets.models.Tweet;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -27,13 +28,13 @@ import java.util.List;
 public class TweetsArrayAdapter extends RecyclerView.Adapter<TweetsArrayAdapter.ViewHolder> {
 
     // Store a member variable for the contacts
-    private List<Tweet> mTweets;
+    private ArrayList<Tweet> amTweets;
     // Store the context for easy access
     private Context mContext;
 
     // Pass in the contact array into the constructor
-    public TweetsArrayAdapter(Context context, List<Tweet> tweets) {
-        this.mTweets = tweets;
+    public TweetsArrayAdapter(Context context, ArrayList<Tweet> tweets) {
+        this.amTweets = tweets;
         this.mContext = context;
     }
 
@@ -65,15 +66,8 @@ public class TweetsArrayAdapter extends RecyclerView.Adapter<TweetsArrayAdapter.
         @Override
         public void onClick(View view) {
             int position = getLayoutPosition(); // gets item position
-            Tweet tweet = mTweets.get(position);
+            Tweet tweet = amTweets.get(position);
             Toast.makeText(view.getContext(), tweet.getBody(), Toast.LENGTH_SHORT).show();
-
-//            // Create an intent to display article
-//            Intent intent = new Intent(context, ArticleActivity.class);
-//            // pass in that article to intent
-//            intent.putExtra("article", article);
-//            //launch the activity
-//            context.startActivity(intent);
         }
     }
 
@@ -95,7 +89,7 @@ public class TweetsArrayAdapter extends RecyclerView.Adapter<TweetsArrayAdapter.
     @Override
     public void onBindViewHolder(TweetsArrayAdapter.ViewHolder viewHolder, int position) {
         // Get the data model based on position
-        Tweet tweet = mTweets.get(position);
+        Tweet tweet = amTweets.get(position);
 
         // Set item views based on your views and data model
         TextView tvUsername = viewHolder.tvUsername;
@@ -119,7 +113,18 @@ public class TweetsArrayAdapter extends RecyclerView.Adapter<TweetsArrayAdapter.
     // Returns the total count of items in the list
     @Override
     public int getItemCount() {
-        return mTweets.size();
+        return amTweets.size();
     }
 
+    // Clean all elements of the recycler
+    public void clear() {
+        amTweets.clear();
+        notifyDataSetChanged();
+    }
+
+    // Add a list of items
+    public void addAll(List<Tweet> list) {
+        amTweets.addAll(list);
+        notifyDataSetChanged();
+    }
 }

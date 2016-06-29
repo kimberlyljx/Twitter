@@ -4,8 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -14,7 +12,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -33,7 +30,6 @@ public class TimelineActivity extends AppCompatActivity {
     @BindView(R.id.drawer_layout) DrawerLayout mDrawer;
     @BindView(R.id.viewpager) ViewPager viewPager;
     @BindView(R.id.sliding_tabs) TabLayout tabLayout;
-    @BindView(R.id.flContent) FrameLayout frag;
 
     private ActionBarDrawerToggle drawerToggle;
     private ImageView ivNavProfile;
@@ -67,10 +63,8 @@ public class TimelineActivity extends AppCompatActivity {
         setupDrawerContent(nvDrawer);
 
         // Get the ViewPager and set it's PagerAdapter so that it can display items
-        adapterViewPager = new TimelineFragmentPagerAdapter(getSupportFragmentManager(),
-                TimelineActivity.this);
+        adapterViewPager = new TimelineFragmentPagerAdapter(getSupportFragmentManager(), TimelineActivity.this);
         viewPager.setAdapter(adapterViewPager);
-
 
         // Give the TabLayout the ViewPager
         tabLayout.setupWithViewPager(viewPager);
@@ -85,7 +79,7 @@ public class TimelineActivity extends AppCompatActivity {
                 viewPager.setCurrentItem(position);
                 Toast.makeText(TimelineActivity.this,
                         "Selected page position: " + position, Toast.LENGTH_SHORT).show();
-                showFragment();
+//                showFragment();
             }
             // This method will be invoked when the current page is scrolled
             @Override
@@ -101,19 +95,7 @@ public class TimelineActivity extends AppCompatActivity {
             }
         });
         viewPager.setCurrentItem(0);
-        showFragment();
-    }
 
-    private void showFragment() {
-        // 1. Get support fragment manager
-        FragmentManager fm = getSupportFragmentManager();
-        // 2. create a transaction
-        FragmentTransaction ft = fm.beginTransaction();
-        // 3. add/remove fragment
-        ft.replace(R.id.flContent, adapterViewPager.getItem(viewPager.getCurrentItem()) );
-//        ft.addToBackStack("two");
-        // 4. commit the transaction
-        ft.commit();
         getSupportActionBar().setTitle( TimelineFragmentPagerAdapter.getTitle( viewPager.getCurrentItem()) );
     }
 
@@ -188,8 +170,25 @@ public class TimelineActivity extends AppCompatActivity {
         super.onPostCreate(savedInstanceState);
     }
 
+    // REQUEST_CODE can be any value we like, used to determine the result type later
+    private final int TWEET_CODE = 20;
+
     public void composeTweet(View view) {
         Intent i = new Intent(TimelineActivity.this, ComposeActivity.class);
-        startActivity(i);
+        startActivityForResult(i, TWEET_CODE);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // REQUEST_CODE is defined above
+        if (resultCode == RESULT_OK && requestCode == TWEET_CODE) {
+//            Tweet tweet = (Tweet) getIntent().getSerializableExtra("tweet");
+//            HomeTimelineFragment fragmentHomeTweets =
+//                    (HomeTimelineFragment) adapterViewPager.getRegisteredFragment(0);
+//            fragmentHomeTweets.appendTweet(tweet);
+//            viewPager.setCurrentItem(0);
+//            Toast.makeText(this, "Tweeted", Toast.LENGTH_SHORT).show();
+
+        }
     }
 }

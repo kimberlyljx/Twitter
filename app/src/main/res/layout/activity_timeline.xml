@@ -49,11 +49,17 @@
                 android:layout_weight="1"
                 android:background="@android:color/white" />
 
-            <!-- The main content view where fragments are loaded -->
-            <FrameLayout
-                android:id="@+id/flContent"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+            <android.support.design.widget.FloatingActionButton
+                android:src="@drawable/ic_compose"
+                app:fabSize="normal"
+                android:onClick="composeTweet"
+                android:background="@color/twitter_blue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|right"
+                android:layout_margin="16dp"
+                app:layout_anchor="@id/viewpager"
+                app:layout_anchorGravity="bottom|right|end" />
 
         </LinearLayout>
 
@@ -70,28 +76,6 @@
 
     </android.support.v4.widget.DrawerLayout>
 
-    <android.support.design.widget.FloatingActionButton
-        android:src="@drawable/ic_compose"
-        app:fabSize="normal"
-        android:onClick="composeTweet"
-        android:background="@color/twitter_blue"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|right"
-        android:layout_margin="16dp"
-        app:layout_anchor="@id/flContent"
-        app:layout_anchorGravity="bottom|right|end" />
-
-    <!--<fragment-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:name="com.codepath.apps.mysimpletweets.fragments.HomeTimelineFragment"-->
-        <!--android:id="@+id/fragmentTimeline"-->
-        <!--android:layout_alignParentTop="true"-->
-        <!--android:layout_alignParentLeft="true"-->
-        <!--android:layout_alignParentStart="true"-->
-        <!--tools:layout="@layout/fragment_tweets_list" />-->
-    <!---->
 </android.support.design.widget.CoordinatorLayout>
 
 </LinearLayout>

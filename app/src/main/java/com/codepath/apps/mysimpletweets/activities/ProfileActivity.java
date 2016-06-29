@@ -7,12 +7,11 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import com.codepath.apps.mysimpletweets.R;
+import com.codepath.apps.mysimpletweets.adapters.ProfileFragmentPagerAdapter;
 import com.codepath.apps.mysimpletweets.adapters.SmartFragmentStatePagerAdapter;
-import com.codepath.apps.mysimpletweets.adapters.TimelineFragmentPagerAdapter;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -26,8 +25,6 @@ public class ProfileActivity extends AppCompatActivity {
     ViewPager viewPager;
     @BindView(R.id.sliding_tabs)
     TabLayout tabLayout;
-    @BindView(R.id.flContent)
-    FrameLayout frag;
     public static String POSITION = "POSITION";
 
     @Override
@@ -51,8 +48,7 @@ public class ProfileActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Profile");
         // Get the ViewPager and set it's PagerAdapter so that it can display items
-        adapterViewPager = new TimelineFragmentPagerAdapter(getSupportFragmentManager(),
-                ProfileActivity.this);
+        adapterViewPager = new ProfileFragmentPagerAdapter(getSupportFragmentManager(), ProfileActivity.this);
         viewPager.setAdapter(adapterViewPager);
 
         // Give the TabLayout the ViewPager
@@ -67,7 +63,6 @@ public class ProfileActivity extends AppCompatActivity {
                 viewPager.setCurrentItem(position);
                 Toast.makeText(ProfileActivity.this,
                         "Selected page position: " + position, Toast.LENGTH_SHORT).show();
-                showFragment();
             }
             // This method will be invoked when the current page is scrolled
             @Override
@@ -83,7 +78,6 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
         viewPager.setCurrentItem(0);
-        showFragment();
     }
 
     private void showFragment() {
@@ -92,7 +86,7 @@ public class ProfileActivity extends AppCompatActivity {
         // 2. create a transaction
         FragmentTransaction ft = fm.beginTransaction();
         // 3. add/remove fragment
-        ft.replace(R.id.flContent, adapterViewPager.getItem(viewPager.getCurrentItem()) );
+//        ft.replace(R.id.flContent, adapterViewPager.getItem(viewPager.getCurrentItem()) );
 //        ft.addToBackStack("two");
         // 4. commit the transaction
         ft.commit();

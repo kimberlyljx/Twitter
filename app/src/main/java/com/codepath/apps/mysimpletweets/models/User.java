@@ -3,17 +3,32 @@ package com.codepath.apps.mysimpletweets.models;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
+
 /**
  * Created by klimjinx on 6/27/16.
  */
-public class User {
-    private String name;
-    private long uid;
-    private String screenName;
-    private String profileImageUrl;
-    private String description;
-    private String location;
-    private int followersCount;
+
+public class User implements Serializable {
+    String name;
+    long uid;
+    String screenName;
+    String profileImageUrl;
+    String description;
+    String location;
+    int followersCount;
+
+    public String getDescription() {
+        return description;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public int getFollowersCount() {
+        return followersCount;
+    }
 
     public String getName() {
         return name;

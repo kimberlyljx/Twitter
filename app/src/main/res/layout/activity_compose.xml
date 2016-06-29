@@ -28,6 +28,7 @@
         android:layout_height="wrap_content"
         android:textStyle="bold"
         android:text="@string/send"
+        android:onClick="postTweet"
         android:textAllCaps="false"
         android:background="@color/twitter_blue"
         android:textColor="@android:color/white"
