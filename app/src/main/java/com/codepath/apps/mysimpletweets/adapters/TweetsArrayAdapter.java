@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.codepath.apps.mysimpletweets.ParseRelativeDate;
 import com.codepath.apps.mysimpletweets.R;
@@ -55,7 +54,7 @@ public class TweetsArrayAdapter extends RecyclerView.Adapter<TweetsArrayAdapter.
             // Stores the itemView in a public final member variable that can be used
             // to access the context from any ViewHolder instance.
             super(itemView);
-            ivProfile = (ImageView) itemView.findViewById(R.id.ivProfile);
+            ivProfile = (ImageView) itemView.findViewById(R.id.ibProfile);
             tvUsername = (TextView) itemView.findViewById(R.id.tvUsername);
             tvName = (TextView) itemView.findViewById(R.id.tvName);
             tvBody = (TextView) itemView.findViewById(R.id.tvBody);
@@ -67,7 +66,7 @@ public class TweetsArrayAdapter extends RecyclerView.Adapter<TweetsArrayAdapter.
         public void onClick(View view) {
             int position = getLayoutPosition(); // gets item position
             Tweet tweet = amTweets.get(position);
-            Toast.makeText(view.getContext(), tweet.getBody(), Toast.LENGTH_SHORT).show();
+//            Toast.makeText(view.getContext(), tweet.getBody(), Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -93,21 +92,34 @@ public class TweetsArrayAdapter extends RecyclerView.Adapter<TweetsArrayAdapter.
 
         // Set item views based on your views and data model
         TextView tvUsername = viewHolder.tvUsername;
-        tvUsername.setText(tweet.getUser().getScreenName());
+        tvUsername.setText("@" + tweet.getUser().getScreenName());
 
         TextView tvName = viewHolder.tvName;
         tvName.setText(tweet.getUser().getName());
 
         TextView tvTimestamp = viewHolder.tvTimestamp;
-        tvTimestamp.setText(ParseRelativeDate.getRelativeTimeAgo(tweet.getCreatedAt()));
+        String time = ParseRelativeDate.getRelativeTimeAgo(tweet.getCreatedAt());
+        tvTimestamp.setText(parseString(time));
 
         TextView tvBody = viewHolder.tvBody;
         tvBody.setText(tweet.getBody());
 
         ImageView ivProfile = viewHolder.ivProfile;
-        ivProfile.setImageResource(0);
-        Picasso.with( ivProfile.getContext() ).load(tweet.getUser().getProfileImageUrl()).into(ivProfile);
+        ivProfile.setTag(tweet.getUser());
 
+        ivProfile.setImageResource(0);
+        Picasso.with( ivProfile.getContext() )
+                .load(tweet.getUser().getProfileImageUrl()).into(ivProfile);
+
+    }
+
+    public String parseString(String timestamp) {
+        timestamp = timestamp.replace("Yesterday", "1d");
+        timestamp = timestamp.replace(" minutes ago", "m");
+        timestamp = timestamp.replace(" hours ago", "h");
+        timestamp = timestamp.replace(" days ago", "d");
+        timestamp = timestamp.replace(" seconds ago", "s");
+        return timestamp;
     }
 
     // Returns the total count of items in the list

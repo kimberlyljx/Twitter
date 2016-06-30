@@ -45,8 +45,7 @@
             <android.support.v4.view.ViewPager
                 android:id="@+id/viewpager"
                 android:layout_width="match_parent"
-                android:layout_height="0px"
-                android:layout_weight="1"
+                android:layout_height="378dp"
                 android:background="@android:color/white" />
 
             <android.support.design.widget.FloatingActionButton
@@ -60,7 +59,6 @@
                 android:layout_margin="16dp"
                 app:layout_anchor="@id/viewpager"
                 app:layout_anchorGravity="bottom|right|end" />
-
         </LinearLayout>
 
         <!-- The navigation drawer that comes from the left -->

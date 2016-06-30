@@ -6,6 +6,7 @@ import android.util.Log;
 
 import com.codepath.apps.mysimpletweets.TwitterApplication;
 import com.codepath.apps.mysimpletweets.TwitterClient;
+import com.codepath.apps.mysimpletweets.models.Tweet;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.json.JSONArray;
@@ -39,12 +40,13 @@ public class MentionsTimelineFragment extends TweetsListFragment {
             public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
                 // Deserialize Json and load model date into listview'
                 Log.d("JSON", response.toString());
-
-//                addAll(Tweet.fromJSONArray(response));
+                mTweets.addAll(Tweet.fromJSONArray(response));
+                aTweets.notifyDataSetChanged();
             }
 
             @Override
-            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable,
+                                  JSONObject errorResponse) {
                 Log.d("JSON", errorResponse.toString());
             }
         });

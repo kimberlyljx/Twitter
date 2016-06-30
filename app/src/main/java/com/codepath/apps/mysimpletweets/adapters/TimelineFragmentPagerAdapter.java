@@ -11,6 +11,7 @@ import android.text.style.ImageSpan;
 
 import com.codepath.apps.mysimpletweets.R;
 import com.codepath.apps.mysimpletweets.fragments.HomeTimelineFragment;
+import com.codepath.apps.mysimpletweets.fragments.MentionsTimelineFragment;
 
 /**
  * Created by klimjinx on 6/27/16.
@@ -52,8 +53,8 @@ public class TimelineFragmentPagerAdapter extends SmartFragmentStatePagerAdapter
         switch (position) {
             case HOME_TAB:
                 return HomeTimelineFragment.newInstance(0);
-//            case MENTIONS_TAB:
-//                return MentionsTimelineFragment.newInstance(1);
+            case MENTIONS_TAB:
+                return MentionsTimelineFragment.newInstance(1);
 //            case MOMENTS_TAB:
 //                return MomentsTimelineFragment.newInstance(2);
 //            case NOTIFICATIONS_TAB:

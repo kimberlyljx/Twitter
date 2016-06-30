@@ -69,8 +69,6 @@ public class ComposeActivity extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable s) {}
         });
-
-
     }
 
     @Override
@@ -153,6 +151,28 @@ public class ComposeActivity extends AppCompatActivity {
         //handle replies
         if( tweetName.length() > 0) {
 //                    client.postStatusUpdate( new StatusUpdate(toTweet).inReplyToStatusId(tweetID) );
+            //handle normal tweets
+            client.postReply ( new JsonHttpResponseHandler() {
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                    // Deserialize Json and load model date into listview'
+//                    Log.d("JSON", response.toString());
+//                    //reset the edit text
+//                    etTweet.setText("");
+//                    Tweet tweet = Tweet.fromJSON(response);
+//                    Intent data = new Intent();
+//                    data.putExtra("tweet", tweet);
+//                    setResult(RESULT_OK, data); // set result code and bundle data for response
+//                    Log.d("JSON", response.toString());
+                    finish(); // closes the activity, pass data to parent
+                }
+
+                @Override
+                public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                    super.onFailure(statusCode, headers, throwable, errorResponse);
+                }
+
+            } , toTweet, tweetID);
         } else {
             //handle normal tweets
             client.postStatusUpdate( new JsonHttpResponseHandler() {

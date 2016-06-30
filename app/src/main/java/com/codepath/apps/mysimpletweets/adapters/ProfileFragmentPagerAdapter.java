@@ -4,7 +4,7 @@ import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 
-import com.codepath.apps.mysimpletweets.fragments.HomeTimelineFragment;
+import com.codepath.apps.mysimpletweets.fragments.UserTimelineFragment;
 
 /**
  * Created by klimjinx on 6/28/16.
@@ -14,13 +14,16 @@ public class ProfileFragmentPagerAdapter extends SmartFragmentStatePagerAdapter 
     public final static int MEDIA_TAB = 1;
     public final static int LIKES_TAB = 2;
 
+    public String screenName;
+
     final int PAGE_COUNT = 3;
     private static String tabTitles[] = new String[] { "Tweets", "Media", "Likes" };
     private Context context;
 
-    public ProfileFragmentPagerAdapter(FragmentManager fm, Context context) {
+    public ProfileFragmentPagerAdapter(FragmentManager fm, Context context, String screenName) {
         super(fm);
         this.context = context;
+        this.screenName = screenName;
     }
 
     @Override
@@ -33,13 +36,13 @@ public class ProfileFragmentPagerAdapter extends SmartFragmentStatePagerAdapter 
     public Fragment getItem(int position) {
         switch (position) {
             case TWEETS_TAB:
-                return HomeTimelineFragment.newInstance(0);
+                return UserTimelineFragment.newInstance(0, screenName);
 //            case MEDIA_TAB:
 //                return MediaFragment.newInstance(1);
 //            case LIKES_TAB:
 //                return LikesFragment.newInstance(2);
             default:
-                return HomeTimelineFragment.newInstance(0);
+                return UserTimelineFragment.newInstance(0, screenName);
         }
     }
 
