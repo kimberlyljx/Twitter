@@ -1,10 +1,12 @@
 package com.codepath.apps.mysimpletweets.activities;
 
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -14,6 +16,7 @@ import android.widget.TextView;
 import com.codepath.apps.mysimpletweets.R;
 import com.codepath.apps.mysimpletweets.TwitterApplication;
 import com.codepath.apps.mysimpletweets.TwitterClient;
+import com.codepath.apps.mysimpletweets.models.Tweet;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.json.JSONObject;
@@ -156,14 +159,14 @@ public class ComposeActivity extends AppCompatActivity {
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                     // Deserialize Json and load model date into listview'
-//                    Log.d("JSON", response.toString());
-//                    //reset the edit text
-//                    etTweet.setText("");
-//                    Tweet tweet = Tweet.fromJSON(response);
-//                    Intent data = new Intent();
-//                    data.putExtra("tweet", tweet);
-//                    setResult(RESULT_OK, data); // set result code and bundle data for response
-//                    Log.d("JSON", response.toString());
+                    Log.d("JSON", response.toString());
+                    //reset the edit text
+                    etTweet.setText("");
+                    Tweet tweet = Tweet.fromJSON(response);
+                    Intent data = new Intent();
+                    data.putExtra("tweet", tweet);
+                    setResult(RESULT_OK, data); // set result code and bundle data for response
+                    Log.d("JSON", response.toString());
                     finish(); // closes the activity, pass data to parent
                 }
 
@@ -179,14 +182,14 @@ public class ComposeActivity extends AppCompatActivity {
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                     // Deserialize Json and load model date into listview'
-//                    Log.d("JSON", response.toString());
-//                    //reset the edit text
-//                    etTweet.setText("");
-//                    Tweet tweet = Tweet.fromJSON(response);
-//                    Intent data = new Intent();
-//                    data.putExtra("tweet", tweet);
-//                    setResult(RESULT_OK, data); // set result code and bundle data for response
-//                    Log.d("JSON", response.toString());
+                    Log.d("JSON", response.toString());
+                    //reset the edit text
+                    etTweet.setText("");
+                    Tweet tweet = Tweet.fromJSON(response);
+                    Intent data = new Intent();
+                    data.putExtra("tweet", tweet);
+                    setResult(RESULT_OK, data); // set result code and bundle data for response
+                    Log.d("JSON", response.toString());
                     finish(); // closes the activity, pass data to parent
                 }
 

@@ -10,9 +10,11 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.codepath.apps.mysimpletweets.R;
@@ -20,10 +22,17 @@ import com.codepath.apps.mysimpletweets.TwitterApplication;
 import com.codepath.apps.mysimpletweets.TwitterClient;
 import com.codepath.apps.mysimpletweets.adapters.SmartFragmentStatePagerAdapter;
 import com.codepath.apps.mysimpletweets.adapters.TimelineFragmentPagerAdapter;
+import com.codepath.apps.mysimpletweets.fragments.HomeTimelineFragment;
+import com.codepath.apps.mysimpletweets.models.Tweet;
 import com.codepath.apps.mysimpletweets.models.User;
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.squareup.picasso.Picasso;
+
+import org.json.JSONObject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cz.msebera.android.httpclient.Header;
 
 public class TimelineActivity extends AppCompatActivity {
     private SmartFragmentStatePagerAdapter adapterViewPager;
@@ -35,10 +44,12 @@ public class TimelineActivity extends AppCompatActivity {
     @BindView(R.id.sliding_tabs) TabLayout tabLayout;
 
     private ActionBarDrawerToggle drawerToggle;
-    private ImageView ivNavProfile;
     public static String POSITION = "POSITION";
-    private User user;
     public TwitterClient activityClient;
+    public ImageView ivNavProfile;
+    public TextView tvNavName;
+    public TextView tvNavUsername;
+
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
@@ -65,7 +76,11 @@ public class TimelineActivity extends AppCompatActivity {
 
         // Add at runtime b/c (null exceptions) on header lookups
         View headerLayout = nvDrawer.inflateHeaderView(R.layout.nav_header);
+
         ivNavProfile = (ImageView) headerLayout.findViewById(R.id.ivNavProfile);
+        tvNavName = (TextView) headerLayout.findViewById(R.id.tvNavName);
+        tvNavUsername = (TextView) headerLayout.findViewById(R.id.tvNavUsername);
+
         // Setup drawer view
         setupDrawerContent(nvDrawer);
 
@@ -115,7 +130,29 @@ public class TimelineActivity extends AppCompatActivity {
                         return true;
                     }
                 });
+
+        activityClient.getMyInfo(new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                User user = User.fromJSON (response);
+                Log.d("TimelineActivity", response.toString());
+                setNavProfile(user);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                Log.d("TimelineActivity", errorResponse.toString());
+            }
+        });
     }
+
+    private void setNavProfile(User user) {
+        Picasso.with(this).load(user.getProfileImageUrl()).into(ivNavProfile);
+        tvNavName.setText(user.getName());
+        tvNavUsername.setText("@" + user.getScreenName());
+
+    }
+
 
     public void selectDrawerItem(MenuItem menuItem) {
         // Create a new activity to show based on nav item clicked
@@ -196,12 +233,12 @@ public class TimelineActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         // REQUEST_CODE is defined above
         if (resultCode == RESULT_OK && requestCode == TWEET_CODE) {
-//            Tweet tweet = (Tweet) getIntent().getSerializableExtra("tweet;
-//            HomeTimelineFragment fragmentHomeTweet=
-//                    (HomeTimelineFragment) adapterViewPager.getRegisteredFragment(;
-//            fragmentHomeTweets.appendTweet(twee;
-//            viewPager.setCurrentItem(;
-//            Toast.makeText(this, "Tweeted", Toast.LENGTH_SHORT).show();
+            Tweet tweet = (Tweet) data.getSerializableExtra("tweet");
+            HomeTimelineFragment fragmentHomeTweets =
+                    (HomeTimelineFragment) adapterViewPager.getRegisteredFragment(0);
+            fragmentHomeTweets.appendTweet(tweet);
+            viewPager.setCurrentItem(0);
+            Toast.makeText(this, "Tweeted", Toast.LENGTH_SHORT).show();
 
         }
     }
@@ -251,5 +288,3 @@ public class TimelineActivity extends AppCompatActivity {
 //            i.putExtra("user", user);
 //            startActivity(i);
 }
-//    }
-//}

@@ -12,6 +12,7 @@ import android.text.style.ImageSpan;
 import com.codepath.apps.mysimpletweets.R;
 import com.codepath.apps.mysimpletweets.fragments.HomeTimelineFragment;
 import com.codepath.apps.mysimpletweets.fragments.MentionsTimelineFragment;
+import com.codepath.apps.mysimpletweets.fragments.MessagesFragment;
 
 /**
  * Created by klimjinx on 6/27/16.
@@ -33,7 +34,7 @@ public class TimelineFragmentPagerAdapter extends SmartFragmentStatePagerAdapter
     };
 
     final int PAGE_COUNT = 5; // 5 tabs
-    private static String tabTitles[] = new String[] { "Home", "Mentions", "Moments", "Notifications", "Messages" };
+    private static String tabTitles[] = new String[] { "Home", "Mentions", "Moments", "Notifications", "Message" };
     private Context context;
 
     public TimelineFragmentPagerAdapter(FragmentManager fm, Context context) {
@@ -59,8 +60,8 @@ public class TimelineFragmentPagerAdapter extends SmartFragmentStatePagerAdapter
 //                return MomentsTimelineFragment.newInstance(2);
 //            case NOTIFICATIONS_TAB:
 //                return NotificationsFragment.newInstance(3);
-//            case MESSAGES_TAB:
-//                return MessagesFragment.newInstance(4);
+            case MESSAGES_TAB:
+                return MessagesFragment.newInstance(4);
             default:
                 return HomeTimelineFragment.newInstance(0);
         }

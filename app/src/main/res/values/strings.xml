@@ -21,5 +21,6 @@
     <string name="website">Website</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="follow">Follow or Setup</string>
+    <string name="message_body">Message Body</string>
 
 </resources>

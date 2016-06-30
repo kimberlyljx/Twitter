@@ -108,10 +108,10 @@ public class ProfileActivity extends AppCompatActivity {
         }
     }
 
-//    public void showProfile(View view) {
-//        User user = (User) view.getTag();
-//        loadUserInfo(user.getScreenName());
-//    }
+    public void showProfile(View view) {
+        User user = (User) view.getTag();
+        loadUserInfo(user.getScreenName());
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

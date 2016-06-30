@@ -52,6 +52,7 @@ public class TweetsListFragment extends Fragment {
                         Toast.makeText(getContext(), "Clicked " + Integer.toString(position), Toast.LENGTH_SHORT).show();
                         Log.d("Tweet", "cool");
                         Intent i = new Intent( getActivity() , TweetDetailActivity.class);
+                        i.putExtra("tweet", mTweets.get(position));
                         startActivity(i);
                     }
                 }

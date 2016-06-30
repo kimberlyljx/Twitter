@@ -86,15 +86,20 @@ public class TwitterClient extends OAuthBaseClient {
         getClient().get(apiUrl, params, handler);
     }
 
+    public void getDirectMessages(AsyncHttpResponseHandler handler) {
+        String apiUrl = getApiUrl("direct_messages.json");
+        getClient().get(apiUrl, handler);
+    }
+
     public void postStatusUpdate(AsyncHttpResponseHandler handler, String text) {
-        String apiUrl = getApiUrl("/statuses/update.json");
+        String apiUrl = getApiUrl("statuses/update.json");
         RequestParams params = new RequestParams();
         params.put("status", text);
         getClient().post(apiUrl, params, handler);
     }
 
     public void postReply(AsyncHttpResponseHandler handler, String text, long replyToId) {
-        String apiUrl = getApiUrl("/statuses/update.json");
+        String apiUrl = getApiUrl("statuses/update.json");
         RequestParams params = new RequestParams();
         params.put("status", text);
         params.put("in_reply_to_status_id", replyToId);
@@ -102,7 +107,7 @@ public class TwitterClient extends OAuthBaseClient {
     }
 
     public void postRetweet(AsyncHttpResponseHandler handler, long id) {
-        String apiUrl = getApiUrl("/statuses/retweet.json");
+        String apiUrl = getApiUrl("statuses/retweet.json");
         RequestParams params = new RequestParams();
         params.put("id", id);
         params.put("trim_user", true);
@@ -110,12 +115,12 @@ public class TwitterClient extends OAuthBaseClient {
     }
 
     public void postFavorite(AsyncHttpResponseHandler handler, long id) {
-        String apiUrl = getApiUrl("/favorites/create.json");
+        String apiUrl = getApiUrl("favorites/create.json");
         RequestParams params = new RequestParams();
         params.put("id", id);
         getClient().post(apiUrl, params, handler);
     }
-    
+
 	/* 1. Define the endpoint URL with getApiUrl and pass a relative path to the endpoint
 	 * 	  i.e getApiUrl("statuses/home_timeline.json");
 	 * 2. Define the parameters to pass to the request (query or body)
