@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"/>
 
-    <ImageButton
+    <Button
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:id="@+id/ibProfile"
@@ -60,34 +60,36 @@
         android:layout_toEndOf="@+id/ibProfile" />
 
 
-    <ImageButton
+    <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@android:color/white"
         android:id="@+id/ibReply"
         android:layout_below="@id/tvTimestamp"
         android:layout_marginTop="15dp"
-        android:layout_marginRight="15dp"
+        android:layout_marginRight="20dp"
         android:layout_alignLeft="@+id/ibProfile"
-        android:src="@drawable/ic_reply" />
+        android:drawableLeft="@drawable/ic_reply" />
 
-    <ImageButton
+    <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@android:color/white"
         android:id="@+id/ibRetweet"
-        android:layout_marginRight="15dp"
-        android:src="@drawable/ic_retweet"
+        android:layout_marginRight="20dp"
+        android:stateListAnimator="@null"
+        android:drawableLeft="@drawable/ic_retweet"
         android:layout_alignBottom="@+id/ibReply"
         android:layout_toRightOf="@+id/ibReply"
         android:layout_toEndOf="@+id/ibReply" />
 
-    <ImageButton
+    <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@android:color/white"
         android:id="@+id/ibLike"
-        android:src="@drawable/ic_heart"
+        android:stateListAnimator="@null"
+        android:drawableLeft="@drawable/ic_heart"
         android:layout_toRightOf="@+id/ibRetweet"
         android:layout_alignBottom="@+id/ibReply"/>
 
@@ -96,6 +98,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/etReply"
         android:hint="Reply to"
+        android:stateListAnimator="@null"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
         android:paddingBottom="15dp"

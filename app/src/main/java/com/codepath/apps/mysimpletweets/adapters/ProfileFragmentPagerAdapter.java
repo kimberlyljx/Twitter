@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 
+import com.codepath.apps.mysimpletweets.fragments.LikesFragment;
 import com.codepath.apps.mysimpletweets.fragments.UserTimelineFragment;
 
 /**
@@ -39,8 +40,8 @@ public class ProfileFragmentPagerAdapter extends SmartFragmentStatePagerAdapter 
                 return UserTimelineFragment.newInstance(0, screenName);
 //            case MEDIA_TAB:
 //                return MediaFragment.newInstance(1);
-//            case LIKES_TAB:
-//                return LikesFragment.newInstance(2);
+            case LIKES_TAB:
+                return LikesFragment.newInstance(2, screenName);
             default:
                 return UserTimelineFragment.newInstance(0, screenName);
         }

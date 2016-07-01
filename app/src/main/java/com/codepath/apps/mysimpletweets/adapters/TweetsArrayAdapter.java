@@ -8,7 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -66,9 +66,9 @@ public class TweetsArrayAdapter extends RecyclerView.Adapter<TweetsArrayAdapter.
         private TextView tvUsername;
         private TextView tvBody;
         private TextView tvTimestamp;
-        private ImageButton ibReply;
-        private ImageButton ibLike;
-        private ImageButton ibRetweet;
+        private Button ibReply;
+        private Button ibLike;
+        private Button ibRetweet;
 
         // We also create a constructor that accepts the entire item row
         // and does the view lookups to find each subview
@@ -77,9 +77,9 @@ public class TweetsArrayAdapter extends RecyclerView.Adapter<TweetsArrayAdapter.
             // to access the context from any ViewHolder instance.
             super(itemView);
             ivProfile = (ImageView) itemView.findViewById(R.id.ibProfile);
-            ibReply = (ImageButton) itemView.findViewById(R.id.ibReply);
-            ibRetweet = (ImageButton) itemView.findViewById(R.id.ibRetweet);
-            ibLike = (ImageButton) itemView.findViewById(R.id.ibLike);
+            ibReply = (Button) itemView.findViewById(R.id.ibReply);
+            ibRetweet = (Button) itemView.findViewById(R.id.ibRetweet);
+            ibLike = (Button) itemView.findViewById(R.id.ibLike);
             tvUsername = (TextView) itemView.findViewById(R.id.tvUsername);
             tvName = (TextView) itemView.findViewById(R.id.tvName);
             tvBody = (TextView) itemView.findViewById(R.id.tvBody);
@@ -120,7 +120,7 @@ public class TweetsArrayAdapter extends RecyclerView.Adapter<TweetsArrayAdapter.
         // Get the data model based on position
         final Tweet tweet = amTweets.get(position);
 
-        ImageButton ibReply = viewHolder.ibReply;
+        Button ibReply = viewHolder.ibReply;
         ibReply.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -132,7 +132,7 @@ public class TweetsArrayAdapter extends RecyclerView.Adapter<TweetsArrayAdapter.
             }
         });
 
-        ImageButton ibRetweet = viewHolder.ibRetweet;
+        Button ibRetweet = viewHolder.ibRetweet;
         ibRetweet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -151,7 +151,7 @@ public class TweetsArrayAdapter extends RecyclerView.Adapter<TweetsArrayAdapter.
             }
         });
 
-        ImageButton ibLike = viewHolder.ibLike;
+        Button ibLike = viewHolder.ibLike;
         ibLike.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -190,6 +190,10 @@ public class TweetsArrayAdapter extends RecyclerView.Adapter<TweetsArrayAdapter.
         ivProfile.setImageResource(0);
         Picasso.with( ivProfile.getContext() )
                 .load(tweet.getUser().getProfileImageUrl()).into(ivProfile);
+
+        if (tweet.getFavorited()) {
+            viewHolder.ibLike.setBackgroundResource(R.drawable.ic_red_heart);
+        }
 
     }
 

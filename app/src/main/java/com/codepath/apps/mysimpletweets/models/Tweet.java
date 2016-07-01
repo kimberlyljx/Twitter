@@ -30,6 +30,12 @@ public class Tweet extends Model implements Serializable {
     @Column(name = "created_at")
     String createdAt;
 
+    @Column(name = "favorited")
+    Boolean favorited;
+
+    @Column(name = "retweeted")
+    Boolean retweeted;
+
     @Column(name = "favorites_count")
     Integer favoritesCount;
 
@@ -56,6 +62,22 @@ public class Tweet extends Model implements Serializable {
         return createdAt;
     }
 
+    public Boolean getFavorited() {
+        return favorited;
+    }
+
+    public Boolean getRetweeted() {
+        return retweeted;
+    }
+
+    public Integer getFavoritesCount() {
+        return favoritesCount;
+    }
+
+    public Integer getRetweetCount() {
+        return retweetCount;
+    }
+
     public static Tweet fromJSON(JSONObject jsonObject) {
         Tweet tweet = new Tweet();
         try {
@@ -63,7 +85,11 @@ public class Tweet extends Model implements Serializable {
             tweet.uid = jsonObject.getLong("id");
             tweet.createdAt = jsonObject.getString("created_at");
             tweet.user = User.fromJSON(jsonObject.getJSONObject("user"));
-            tweet.favoritesCount = jsonObject.getInt("favorites_count");
+            if (jsonObject.has("favorites_count")) {
+                tweet.favoritesCount = jsonObject.getInt("favorites_count");
+            }
+            tweet.favorited = jsonObject.getBoolean("favorited");
+            tweet.retweeted = jsonObject.getBoolean("retweeted");
             tweet.retweetCount = jsonObject.getInt("retweet_count");
         } catch (JSONException e) {
             e.printStackTrace();

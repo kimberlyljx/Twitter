@@ -60,8 +60,7 @@ public class TwitterClient extends OAuthBaseClient {
     public void getHomeTimeline(AsyncHttpResponseHandler handler) {
         String apiUrl = getApiUrl("statuses/home_timeline.json");
         RequestParams params = new RequestParams();
-        params.put("count", 5);
-        params.put("since_id", 1);
+        params.put("count", 10);
         getClient().get(apiUrl, params, handler);
     }
 
@@ -79,10 +78,11 @@ public class TwitterClient extends OAuthBaseClient {
         getClient().get(apiUrl, params, handler);
     }
 
-    public void getSearchTweets(AsyncHttpResponseHandler handler, String query) {
+    public void getSearchTweets(AsyncHttpResponseHandler handler, String query, boolean popular) {
         String apiUrl = getApiUrl("search/tweets.json");
         RequestParams params = new RequestParams();
         params.put("q", query);
+        if (popular) {params.put("result_type", "popular");}
         getClient().get(apiUrl, params, handler);
     }
 
@@ -119,6 +119,17 @@ public class TwitterClient extends OAuthBaseClient {
         RequestParams params = new RequestParams();
         params.put("id", id);
         getClient().post(apiUrl, params, handler);
+    }
+
+    public void getFavorites(AsyncHttpResponseHandler handler, String otherUserName) {
+        String apiUrl = getApiUrl("favorites/list.json");
+        RequestParams params = new RequestParams();
+        if (otherUserName != null) {
+            params.put("screen_name", otherUserName);
+            getClient().get(apiUrl, params, handler);
+        } else {
+            getClient().get(apiUrl, handler);
+        }
     }
 
 	/* 1. Define the endpoint URL with getApiUrl and pass a relative path to the endpoint

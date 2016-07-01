@@ -54,6 +54,7 @@ public class TimelineActivity extends AppCompatActivity {
     public TextView tvNavName;
     public TextView tvNavUsername;
 
+    private static String tabTitles[] = new String[] { "Home", "Mentions", "Moments", "Notifications", "Message" };
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
@@ -105,7 +106,7 @@ public class TimelineActivity extends AppCompatActivity {
                 viewPager.setCurrentItem(position);
                 Toast.makeText(TimelineActivity.this,
                         "Selected page position: " + position, Toast.LENGTH_SHORT).show();
-//                showFragment();
+                getSupportActionBar().setTitle(tabTitles[position]);
             }
             // This method will be invoked when the current page is scrolled
             @Override
