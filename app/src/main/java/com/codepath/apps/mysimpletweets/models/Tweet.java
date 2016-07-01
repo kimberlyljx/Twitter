@@ -30,6 +30,12 @@ public class Tweet extends Model implements Serializable {
     @Column(name = "created_at")
     String createdAt;
 
+    @Column(name = "favorites_count")
+    Integer favoritesCount;
+
+    @Column(name = "retweet_count")
+    Integer retweetCount;
+
     public Tweet() {
         super();
     }
@@ -57,6 +63,8 @@ public class Tweet extends Model implements Serializable {
             tweet.uid = jsonObject.getLong("id");
             tweet.createdAt = jsonObject.getString("created_at");
             tweet.user = User.fromJSON(jsonObject.getJSONObject("user"));
+            tweet.favoritesCount = jsonObject.getInt("favorites_count");
+            tweet.retweetCount = jsonObject.getInt("retweet_count");
         } catch (JSONException e) {
             e.printStackTrace();
         }
