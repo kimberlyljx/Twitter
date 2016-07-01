@@ -18,12 +18,13 @@ import butterknife.ButterKnife;
 
 public class TweetDetailActivity extends AppCompatActivity {
     @BindView(R.id.toolbar) Toolbar idToolbar;
-    @BindView(R.id.ibProfile) ImageButton ibProfile;
+    @BindView(R.id.ibProfile) ImageView ibProfile;
     @BindView(R.id.ivTweetMedia) ImageView ivTweetMedia;
     @BindView(R.id.tvName) TextView tvName;
     @BindView(R.id.tvUsername) TextView tvUsername;
     @BindView(R.id.tvBody) TextView tvBody;
     @BindView(R.id.tvTimestamp) TextView tvTimestamp;
+    @BindView(R.id.tvCount) TextView tvCount;
 
     private Tweet tweet;
 
@@ -56,6 +57,19 @@ public class TweetDetailActivity extends AppCompatActivity {
             Picasso.with(ivTweetMedia.getContext()).load(tweet.getMainMediaUrl()).into(ivTweetMedia);
         }
 
+        if (tweet.getFavorited()) {
+            int imgResource = R.drawable.ic_red_heart;
+            viewHolder.ibLike.setCompoundDrawablesWithIntrinsicBounds(imgResource, 0, 0, 0);
+        }
+
+        if (tweet.getFavoritesCount() != 0) viewHolder.ibLike.setText(Integer.toString(tweet.getFavoritesCount()));
+
+
+        if (tweet.getRetweeted()) {
+            int imgResource = R.drawable.ic_green_retweet;
+            viewHolder.ibRetweet.setCompoundDrawablesWithIntrinsicBounds(imgResource, 0, 0, 0);
+        }
+        if (tweet.getFavoritesCount() != 0) viewHolder.ibRetweet.setText(Integer.toString(tweet.getRetweetCount()));
 
     }
 

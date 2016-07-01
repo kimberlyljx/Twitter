@@ -239,11 +239,14 @@ public class TweetsArrayAdapter extends RecyclerView.Adapter<TweetsArrayAdapter.
             viewHolder.ibLike.setCompoundDrawablesWithIntrinsicBounds(imgResource, 0, 0, 0);
         }
 
+        if (tweet.getFavoritesCount() != 0) viewHolder.ibLike.setText(Integer.toString(tweet.getFavoritesCount()));
+
+
         if (tweet.getRetweeted()) {
             int imgResource = R.drawable.ic_green_retweet;
             viewHolder.ibRetweet.setCompoundDrawablesWithIntrinsicBounds(imgResource, 0, 0, 0);
-            viewHolder.ibRetweet.setText(Integer.toString(tweet.getRetweetCount()));
         }
+        if (tweet.getFavoritesCount() != 0) viewHolder.ibRetweet.setText(Integer.toString(tweet.getRetweetCount()));
 
     }
 

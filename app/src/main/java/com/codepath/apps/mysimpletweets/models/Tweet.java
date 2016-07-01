@@ -100,6 +100,7 @@ public class Tweet extends Model implements Serializable {
             tweet.favorited = jsonObject.getBoolean("favorited");
             tweet.retweeted = jsonObject.getBoolean("retweeted");
             tweet.retweetCount = jsonObject.getInt("retweet_count");
+            tweet.favoritesCount = jsonObject.getInt("favorites_count");
 
             JSONObject entities = jsonObject.getJSONObject("entities");
 

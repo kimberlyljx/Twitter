@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@android:color/white"
+    android:descendantFocusability="blocksDescendants"
     android:padding="10dp">
 
     <ImageView
@@ -50,6 +51,8 @@
         android:text="@string/tweet_body"
         android:id="@+id/tvBody"
         android:paddingTop="5dp"
+        android:autoLink="all"
+        android:linksClickable="true"
         android:layout_below="@+id/tvUsername"
         android:layout_toRightOf="@+id/ibProfile"
         android:layout_toEndOf="@+id/ibProfile" />
