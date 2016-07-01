@@ -41,6 +41,8 @@ dependencies {
     // ActiveAndroid for simple persistence with an ORM
     apt 'com.jakewharton:butterknife-compiler:8.1.0'
 
+    compile 'uk.co.chrisjenx:calligraphy:2.2.0'
+
     compile "com.android.support:appcompat-v7:${supportLibVersion}"
     compile "com.android.support:design:${supportLibVersion}"
     compile "com.android.support:recyclerview-v7:${supportLibVersion}"

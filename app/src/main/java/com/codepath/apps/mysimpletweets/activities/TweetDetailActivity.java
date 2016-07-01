@@ -1,5 +1,6 @@
 package com.codepath.apps.mysimpletweets.activities;
 
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -30,6 +31,15 @@ public class TweetDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_tweet_detail);
         tweet = (Tweet) getIntent().getSerializableExtra("tweet");
         ButterKnife.bind(this);
+
+        Typeface font = Typeface.createFromAsset(getAssets(), "fonts/GothamNarrow-Book.otf");
+        tvUsername.setTypeface(font);
+        tvBody.setTypeface(font);
+        tvTimestamp.setTypeface(font);
+
+        Typeface boldFont = Typeface.createFromAsset(getAssets(), "fonts/GothamNarrow-Bold.otf");
+        tvName.setTypeface(boldFont);
+
 
         tvUsername.setText("@" + tweet.getUser().getScreenName());
         tvName.setText(tweet.getUser().getName());

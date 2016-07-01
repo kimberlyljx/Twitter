@@ -9,10 +9,57 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.codepath.apps.mysimpletweets.activities.SearchActivity">
 
-    <fragment
-        tools:context=".fragments.SearchTweetsFragment"
-        android:id="@+id/searchFragment"
+    <android.support.design.widget.CoordinatorLayout
+        android:id="@+id/main_content"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent">
+
+        <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/flContent"
+            tools:context=".activities.SearchActivity">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <!-- TODO customize toolbar -->
+                <include
+                    layout="@layout/toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <android.support.design.widget.TabLayout
+                    android:id="@+id/sliding_tabs"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    style="@style/MyCustomTabLayout"
+                    app:tabMode="scrollable" />
+
+                <android.support.v4.view.ViewPager
+                    android:id="@+id/viewpager"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@android:color/white" />
+            </LinearLayout>
+
+            <android.support.design.widget.FloatingActionButton
+                android:src="@drawable/ic_compose"
+                app:fabSize="normal"
+                android:onClick="composeTweet"
+                android:background="@color/twitter_blue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|right"
+                android:layout_margin="16dp"
+                app:layout_anchor="@id/viewpager"
+                app:layout_anchorGravity="bottom|right|end" />
+        </FrameLayout>
+
+    </android.support.design.widget.CoordinatorLayout>
 
 </RelativeLayout>

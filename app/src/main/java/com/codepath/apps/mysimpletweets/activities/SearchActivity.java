@@ -15,10 +15,10 @@ public class SearchActivity extends AppCompatActivity {
         setContentView(R.layout.activity_search);
         if (savedInstanceState == null) {
             searchTweetsFragment = (SearchTweetsFragment)
-                    getSupportFragmentManager().findFragmentById(R.id.searchFragment);
+                    getSupportFragmentManager().findFragmentById(R.id.flContent);
         }
         String query = getIntent().getStringExtra("query");
-        savedInstanceState.putString("query", query);
+        searchTweetsFragment.searchForTweets(query);
     }
 
 }

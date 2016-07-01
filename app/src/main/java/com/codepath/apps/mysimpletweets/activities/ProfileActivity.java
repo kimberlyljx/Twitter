@@ -1,6 +1,7 @@
 package com.codepath.apps.mysimpletweets.activities;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentManager;
@@ -122,6 +123,17 @@ public class ProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_profile);
         ButterKnife.bind(this);
 
+        Typeface font = Typeface.createFromAsset(getAssets(), "fonts/GothamNarrow-Book.otf");
+        tvUsername.setTypeface(font);
+        tvDescription.setTypeface(font);
+        tvFollowers.setTypeface(font);
+        tvFollowing.setTypeface(font);
+        tvLocation.setTypeface(font);
+
+        Typeface boldFont = Typeface.createFromAsset(getAssets(), "fonts/GothamNarrow-Bold.otf");
+        tvName.setTypeface(boldFont);
+
+
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -172,8 +184,8 @@ public class ProfileActivity extends AppCompatActivity {
         tvUsername.setText(user.getScreenName());
         tvName.setText(user.getName());
         tvDescription.setText(user.getDescription());
-        tvFollowers.setText( Integer.toString(user.getFollowersCount()) + " Followers" );
-        tvFollowing.setText( Integer.toString(user.getFollowingCount()) + " Following");
+        tvFollowers.setText( Integer.toString(user.getFollowersCount()) + " FOLLOWERS" );
+        tvFollowing.setText( Integer.toString(user.getFollowingCount()) + " FOLLOWING");
         Picasso.with(this).load(user.getProfileImageUrl()).into(ibProfile);
         if (user.getLocation() != null) tvLocation.setText(user.getLocation());
     }

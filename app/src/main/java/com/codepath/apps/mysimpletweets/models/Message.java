@@ -24,11 +24,11 @@ public class Message extends Model implements Serializable {
     public long uid;
 
     // This is an association to another activeandroid model
-    @Column(name = "User", onUpdate = Column.ForeignKeyAction.CASCADE, onDelete = Column.ForeignKeyAction.CASCADE)
+    @Column(name = "sender", onUpdate = Column.ForeignKeyAction.CASCADE, onDelete = Column.ForeignKeyAction.CASCADE)
     public User sender;
 
     // This is an association to another activeandroid model
-    @Column(name = "User", onUpdate = Column.ForeignKeyAction.CASCADE, onDelete = Column.ForeignKeyAction.CASCADE)
+    @Column(name = "recipient", onUpdate = Column.ForeignKeyAction.CASCADE, onDelete = Column.ForeignKeyAction.CASCADE)
     public User recipient;
 
     @Column(name = "created_at")

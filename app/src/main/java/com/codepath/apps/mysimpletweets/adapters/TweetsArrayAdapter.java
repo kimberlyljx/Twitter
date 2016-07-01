@@ -2,6 +2,7 @@ package com.codepath.apps.mysimpletweets.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,7 +19,6 @@ import com.codepath.apps.mysimpletweets.TwitterApplication;
 import com.codepath.apps.mysimpletweets.TwitterClient;
 import com.codepath.apps.mysimpletweets.activities.ComposeActivity;
 import com.codepath.apps.mysimpletweets.models.Tweet;
-import com.codepath.apps.mysimpletweets.models.User;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.squareup.picasso.Picasso;
 
@@ -44,10 +44,16 @@ public class TweetsArrayAdapter extends RecyclerView.Adapter<TweetsArrayAdapter.
     // Store the context for easy access
     private Context mContext;
 
+    private Typeface font;
+    private Typeface boldFont;
+
+
     // Pass in the contact array into the constructor
     public TweetsArrayAdapter(Context context, ArrayList<Tweet> tweets) {
         this.amTweets = tweets;
         this.mContext = context;
+        font = Typeface.createFromAsset(context.getAssets(), "fonts/GothamNarrow-Book.otf");
+        boldFont = Typeface.createFromAsset(context.getAssets(), "fonts/GothamNarrow-Bold.otf");
     }
 
     // Provide a direct reference to each of the views within a data item
@@ -61,6 +67,8 @@ public class TweetsArrayAdapter extends RecyclerView.Adapter<TweetsArrayAdapter.
         private TextView tvBody;
         private TextView tvTimestamp;
         private ImageButton ibReply;
+        private ImageButton ibLike;
+        private ImageButton ibRetweet;
 
         // We also create a constructor that accepts the entire item row
         // and does the view lookups to find each subview
@@ -70,11 +78,17 @@ public class TweetsArrayAdapter extends RecyclerView.Adapter<TweetsArrayAdapter.
             super(itemView);
             ivProfile = (ImageView) itemView.findViewById(R.id.ibProfile);
             ibReply = (ImageButton) itemView.findViewById(R.id.ibReply);
+            ibRetweet = (ImageButton) itemView.findViewById(R.id.ibRetweet);
+            ibLike = (ImageButton) itemView.findViewById(R.id.ibLike);
             tvUsername = (TextView) itemView.findViewById(R.id.tvUsername);
             tvName = (TextView) itemView.findViewById(R.id.tvName);
             tvBody = (TextView) itemView.findViewById(R.id.tvBody);
             tvTimestamp = (TextView) itemView.findViewById(R.id.tvTimestamp);
 
+            tvUsername.setTypeface(font);
+            tvBody.setTypeface(font);
+            tvTimestamp.setTypeface(font);
+            tvName.setTypeface(boldFont);
         }
 
         // Handles the row being being clicked
@@ -107,28 +121,52 @@ public class TweetsArrayAdapter extends RecyclerView.Adapter<TweetsArrayAdapter.
         final Tweet tweet = amTweets.get(position);
 
         ImageButton ibReply = viewHolder.ibReply;
-        ibReply.setTag(tweet);
         ibReply.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Toast.makeText(mContext, "Reply ", Toast.LENGTH_SHORT).show();
+                Intent i = new Intent( mContext, ComposeActivity.class);
+                i.putExtra("tweetID", tweet.getUid() );
+                i.putExtra("tweetUser", tweet.getUser().getScreenName());
+                mContext.startActivity(i);
+            }
+        });
+
+        ImageButton ibRetweet = viewHolder.ibRetweet;
+        ibRetweet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 TwitterClient client = TwitterApplication.getRestClient();
-                client.getMyInfo(new JsonHttpResponseHandler() {
+                client.postRetweet(new JsonHttpResponseHandler() {
                     @Override
                     public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                        User user = User.fromJSON (response);
-                        Log.d("Reply", response.toString());
+                        Log.d("Retweet", response.toString());
                     }
                     @Override
                     public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                        Log.d("Reply", errorResponse.toString());
+                        Log.d("Retweet", errorResponse.toString());
                     }
-                });
-                Toast.makeText(mContext, "Reply ", Toast.LENGTH_SHORT).show();
+                }, tweet.getUid());
+                // do animation
+            }
+        });
 
-                Intent i = new Intent( mContext, ComposeActivity.class);
-                i.putExtra("tweetID", tweet.getUid() );
-                i.putExtra("tweetUser", tweet.getUser().getScreenName() );
-                mContext.startActivity(i);
+        ImageButton ibLike = viewHolder.ibLike;
+        ibLike.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TwitterClient client = TwitterApplication.getRestClient();
+                client.postFavorite(new JsonHttpResponseHandler() {
+                    @Override
+                    public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                        Log.d("Like", response.toString());
+                    }
+                    @Override
+                    public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                        Log.d("Like", errorResponse.toString());
+                    }
+                }, tweet.getUid());
+                // do animation
             }
         });
 

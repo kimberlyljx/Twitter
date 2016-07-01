@@ -1,8 +1,13 @@
 package com.codepath.apps.mysimpletweets.fragments;
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
+import com.codepath.apps.mysimpletweets.R;
 import com.codepath.apps.mysimpletweets.TwitterApplication;
 import com.codepath.apps.mysimpletweets.TwitterClient;
 import com.codepath.apps.mysimpletweets.models.Tweet;
@@ -16,24 +21,19 @@ import cz.msebera.android.httpclient.Header;
 public class SearchTweetsFragment extends TweetsListFragment {
     public TwitterClient client;
 
-    public static SearchTweetsFragment newInstance(int page, String query) {
-        SearchTweetsFragment fragment = new SearchTweetsFragment();
-        Bundle args = new Bundle();
-        args.putInt(ARG_PAGE, page);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         client = TwitterApplication.getRestClient();
-        String query = savedInstanceState.getString("query");
-        searchForTweets(query);
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_tweets_list, container, false);
     }
 
     // [] at the root is a jsonOBject
-    private void searchForTweets(String query) {
+    public void searchForTweets(String query) {
         client.getSearchTweets(new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray response) {

@@ -1,6 +1,7 @@
 package com.codepath.apps.mysimpletweets.adapters;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,10 +27,15 @@ public class MessagesArrayAdapter extends RecyclerView.Adapter<MessagesArrayAdap
     // Store the context for easy access
     private Context mContext;
 
+    private Typeface font;
+    private Typeface boldFont;
+
     // Pass in the contact array into the constructor
     public MessagesArrayAdapter(Context context, ArrayList<Message> messages) {
         this.amMessages = messages;
         this.mContext = context;
+        font = Typeface.createFromAsset(context.getAssets(), "fonts/GothamNarrow-Book.otf");
+        boldFont = Typeface.createFromAsset(context.getAssets(), "fonts/GothamNarrow-Bold.otf");
     }
 
     // Provide a direct reference to each of the views within a data item
@@ -54,6 +60,10 @@ public class MessagesArrayAdapter extends RecyclerView.Adapter<MessagesArrayAdap
             tvName = (TextView) itemView.findViewById(R.id.tvName);
             tvBody = (TextView) itemView.findViewById(R.id.tvBody);
             tvTimestamp = (TextView) itemView.findViewById(R.id.tvTimestamp);
+            tvUsername.setTypeface(font);
+            tvBody.setTypeface(font);
+            tvTimestamp.setTypeface(font);
+            tvName.setTypeface(boldFont);
         }
 
         // Handles the row being being clicked

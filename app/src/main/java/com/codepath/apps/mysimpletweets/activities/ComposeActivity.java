@@ -55,6 +55,8 @@ public class ComposeActivity extends AppCompatActivity {
 
         Typeface font = Typeface.createFromAsset(getAssets(), "fonts/GothamNarrow-Book.otf");
         etTweet.setTypeface(font);
+        tvNumChar.setTypeface(font);
+
         etTweet.addTextChangedListener(new TextWatcher()
         {
             @Override

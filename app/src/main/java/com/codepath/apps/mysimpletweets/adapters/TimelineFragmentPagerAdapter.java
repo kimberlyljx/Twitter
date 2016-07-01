@@ -27,7 +27,7 @@ public class TimelineFragmentPagerAdapter extends SmartFragmentStatePagerAdapter
 
     private int[] imageResId = {
             R.drawable.ic_home,
-            R.drawable.ic_compose ,
+            R.drawable.ic_mentions,
             R.drawable.ic_lightning,
             R.drawable.ic_notifications,
             R.drawable.ic_messages,
