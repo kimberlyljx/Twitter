@@ -18,6 +18,16 @@
         <item name="windowNoTitle">true</item>
     </style>
 
+    <style name="TextAppearance.FontPath" parent="android:TextAppearance">
+        <!-- Custom Attr-->
+        <item name="fontPath">fonts/GothamNarrow-Book.otf</item>
+    </style>
+
+    <style name="TextAppearance.BoldFontPath" parent="android:TextAppearance">
+        <!-- Custom Attr-->
+        <item name="fontPath">fonts/GothamNarrow-Bold.otf</item>
+    </style>
+
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />

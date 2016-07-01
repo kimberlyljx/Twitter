@@ -42,6 +42,15 @@ public class Tweet extends Model implements Serializable {
     @Column(name = "retweet_count")
     Integer retweetCount;
 
+    @Column(name = "main_media_url")
+    String mainMediaUrl;
+
+    public String getMainMediaUrl() {
+        return mainMediaUrl;
+    }
+
+    ArrayList<String> mediaUrls;
+
     public Tweet() {
         super();
     }
@@ -91,6 +100,16 @@ public class Tweet extends Model implements Serializable {
             tweet.favorited = jsonObject.getBoolean("favorited");
             tweet.retweeted = jsonObject.getBoolean("retweeted");
             tweet.retweetCount = jsonObject.getInt("retweet_count");
+
+            JSONObject entities = jsonObject.getJSONObject("entities");
+
+            if (entities.has("media")) {
+                JSONArray media = entities.getJSONArray("media");
+                tweet.mainMediaUrl = media.getJSONObject(0).getString("media_url");
+            }
+
+            // TODO many media
+
         } catch (JSONException e) {
             e.printStackTrace();
         }

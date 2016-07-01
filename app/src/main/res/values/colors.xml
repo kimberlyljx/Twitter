@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="twitter_blue">#55acee</color>
+    <color name="logo_blue">#00aced</color>
+    <color name="reply_green">#19CE85</color>
 </resources>

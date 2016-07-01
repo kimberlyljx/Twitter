@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.codepath.apps.mysimpletweets.DividerItemDecoration;
 import com.codepath.apps.mysimpletweets.ItemClickSupport;
 import com.codepath.apps.mysimpletweets.R;
 import com.codepath.apps.mysimpletweets.activities.TweetDetailActivity;
@@ -38,6 +39,7 @@ public class TweetsListFragment extends Fragment {
         super.onCreate(savedInstanceState);
         mTweets = new ArrayList<>();
         aTweets = new TweetsArrayAdapter(getActivity(), mTweets);
+
     }
 
     @Override
@@ -45,12 +47,15 @@ public class TweetsListFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_tweets_list, container, false);
         ButterKnife.bind(this, view);
 
+        RecyclerView.ItemDecoration itemDecoration = new
+                DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL_LIST);
+        rvTweets.addItemDecoration(itemDecoration);
+
         ItemClickSupport.addTo(rvTweets).setOnItemClickListener(
                 new ItemClickSupport.OnItemClickListener() {
                     @Override
                     public void onItemClicked(RecyclerView recyclerView, int position, View v) {
                         Toast.makeText(getContext(), "Clicked " + Integer.toString(position), Toast.LENGTH_SHORT).show();
-                        Log.d("Tweet", "cool");
                         Intent i = new Intent( getActivity() , TweetDetailActivity.class);
                         i.putExtra("tweet", mTweets.get(position));
                         startActivity(i);

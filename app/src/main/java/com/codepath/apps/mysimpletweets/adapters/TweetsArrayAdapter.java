@@ -1,5 +1,6 @@
 package com.codepath.apps.mysimpletweets.adapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
@@ -20,6 +21,7 @@ import com.codepath.apps.mysimpletweets.TwitterClient;
 import com.codepath.apps.mysimpletweets.activities.ComposeActivity;
 import com.codepath.apps.mysimpletweets.models.Tweet;
 import com.loopj.android.http.JsonHttpResponseHandler;
+import com.plattysoft.leonids.ParticleSystem;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONObject;
@@ -62,6 +64,7 @@ public class TweetsArrayAdapter extends RecyclerView.Adapter<TweetsArrayAdapter.
         // Your holder should contain a member variable
         // for any view that will be set as you render a row
         private ImageView ivProfile;
+        private ImageView ivTweetMedia;
         private TextView tvName;
         private TextView tvUsername;
         private TextView tvBody;
@@ -77,6 +80,7 @@ public class TweetsArrayAdapter extends RecyclerView.Adapter<TweetsArrayAdapter.
             // to access the context from any ViewHolder instance.
             super(itemView);
             ivProfile = (ImageView) itemView.findViewById(R.id.ibProfile);
+            ivTweetMedia = (ImageView) itemView.findViewById(R.id.ivTweetMedia);
             ibReply = (Button) itemView.findViewById(R.id.ibReply);
             ibRetweet = (Button) itemView.findViewById(R.id.ibRetweet);
             ibLike = (Button) itemView.findViewById(R.id.ibLike);
@@ -116,7 +120,7 @@ public class TweetsArrayAdapter extends RecyclerView.Adapter<TweetsArrayAdapter.
 
     // Involves populating data into the item through holder
     @Override
-    public void onBindViewHolder(TweetsArrayAdapter.ViewHolder viewHolder, int position) {
+    public void onBindViewHolder(final TweetsArrayAdapter.ViewHolder viewHolder, int position) {
         // Get the data model based on position
         final Tweet tweet = amTweets.get(position);
 
@@ -132,41 +136,75 @@ public class TweetsArrayAdapter extends RecyclerView.Adapter<TweetsArrayAdapter.
             }
         });
 
-        Button ibRetweet = viewHolder.ibRetweet;
+        final Button ibRetweet = viewHolder.ibRetweet;
         ibRetweet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 TwitterClient client = TwitterApplication.getRestClient();
-                client.postRetweet(new JsonHttpResponseHandler() {
-                    @Override
-                    public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                        Log.d("Retweet", response.toString());
-                    }
-                    @Override
-                    public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                        Log.d("Retweet", errorResponse.toString());
-                    }
-                }, tweet.getUid());
-                // do animation
+
+                if (tweet.getRetweeted()) {
+                    client.postRetweet(new JsonHttpResponseHandler() {
+                        @Override
+                        public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                            int imgResource = R.drawable.ic_green_retweet;
+                            ibRetweet.setCompoundDrawablesWithIntrinsicBounds(imgResource, 0, 0, 0);
+                        }
+
+                        @Override
+                        public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                            Log.d("Retweet", errorResponse.toString());
+                        }
+                    }, tweet.getUid());
+                    // do animation
+                } else {
+                    client.postUnretweet(new JsonHttpResponseHandler() {
+                        @Override
+                        public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                            int imgResource = R.drawable.ic_retweet;
+                            ibRetweet.setCompoundDrawablesWithIntrinsicBounds(imgResource, 0, 0, 0);
+                        }
+                        @Override
+                        public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                            Log.d("Retweet", errorResponse.toString());
+                        }
+                    }, tweet.getUid());
+                }
             }
         });
 
-        Button ibLike = viewHolder.ibLike;
+        final Button ibLike = viewHolder.ibLike;
+
         ibLike.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 TwitterClient client = TwitterApplication.getRestClient();
-                client.postFavorite(new JsonHttpResponseHandler() {
-                    @Override
-                    public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                        Log.d("Like", response.toString());
-                    }
-                    @Override
-                    public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                        Log.d("Like", errorResponse.toString());
-                    }
-                }, tweet.getUid());
-                // do animation
+
+                if (tweet.getFavorited()) {
+                    client.destroyFavorite(new JsonHttpResponseHandler() {
+                        @Override
+                        public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                            int imgResource = R.drawable.ic_heart;
+                            ibLike.setCompoundDrawablesWithIntrinsicBounds(imgResource, 0, 0, 0);
+                        }
+                        @Override
+                        public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                        }
+                    }, tweet.getUid());
+
+                } else {
+                    client.postFavorite(new JsonHttpResponseHandler() {
+                        @Override
+                        public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                            int imgResource = R.drawable.ic_red_heart;
+                            ibLike.setCompoundDrawablesWithIntrinsicBounds(imgResource, 0, 0, 0);
+                            new ParticleSystem( (Activity) mContext, 20, R.drawable.ic_red_heart, 1000).setSpeedRange(0.1f, 0.1f).oneShot(ibLike, 18);
+                        }
+                        @Override
+                        public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                            Log.d("Like", errorResponse.toString());
+                        }
+                    }, tweet.getUid());
+                }
             }
         });
 
@@ -191,8 +229,20 @@ public class TweetsArrayAdapter extends RecyclerView.Adapter<TweetsArrayAdapter.
         Picasso.with( ivProfile.getContext() )
                 .load(tweet.getUser().getProfileImageUrl()).into(ivProfile);
 
+        ImageView ivTweetMedia = viewHolder.ivTweetMedia;
+        if (tweet.getMainMediaUrl() != null) {
+            Picasso.with(ivTweetMedia.getContext()).load(tweet.getMainMediaUrl()).into(ivTweetMedia);
+        }
+
         if (tweet.getFavorited()) {
-            viewHolder.ibLike.setBackgroundResource(R.drawable.ic_red_heart);
+            int imgResource = R.drawable.ic_red_heart;
+            viewHolder.ibLike.setCompoundDrawablesWithIntrinsicBounds(imgResource, 0, 0, 0);
+        }
+
+        if (tweet.getRetweeted()) {
+            int imgResource = R.drawable.ic_green_retweet;
+            viewHolder.ibRetweet.setCompoundDrawablesWithIntrinsicBounds(imgResource, 0, 0, 0);
+            viewHolder.ibRetweet.setText(Integer.toString(tweet.getRetweetCount()));
         }
 
     }

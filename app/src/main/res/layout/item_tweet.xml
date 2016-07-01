@@ -80,6 +80,9 @@
         android:background="@android:color/white"
         android:id="@+id/ibRetweet"
         android:layout_marginRight="20dp"
+        android:gravity="center_vertical"
+        android:textAlignment="viewStart"
+        android:textColor="@color/reply_green"
         android:stateListAnimator="@null"
         android:drawableLeft="@drawable/ic_retweet"
         android:layout_alignBottom="@+id/ibReply"
@@ -87,12 +90,12 @@
         android:layout_toEndOf="@+id/ibReply" />
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="50dp"
         android:layout_height="wrap_content"
         android:background="@android:color/white"
         android:id="@+id/ibLike"
         android:stateListAnimator="@null"
         android:drawableLeft="@drawable/ic_heart"
         android:layout_toRightOf="@+id/ibRetweet"
-        android:layout_alignBottom="@+id/ibReply"/>
+        android:layout_alignBottom="@+id/ibReply" />
 </RelativeLayout>

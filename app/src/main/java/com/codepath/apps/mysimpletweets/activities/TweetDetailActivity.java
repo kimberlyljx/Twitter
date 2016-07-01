@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.codepath.apps.mysimpletweets.ParseRelativeDate;
@@ -18,6 +19,7 @@ import butterknife.ButterKnife;
 public class TweetDetailActivity extends AppCompatActivity {
     @BindView(R.id.toolbar) Toolbar idToolbar;
     @BindView(R.id.ibProfile) ImageButton ibProfile;
+    @BindView(R.id.ivTweetMedia) ImageView ivTweetMedia;
     @BindView(R.id.tvName) TextView tvName;
     @BindView(R.id.tvUsername) TextView tvUsername;
     @BindView(R.id.tvBody) TextView tvBody;
@@ -40,7 +42,6 @@ public class TweetDetailActivity extends AppCompatActivity {
         Typeface boldFont = Typeface.createFromAsset(getAssets(), "fonts/GothamNarrow-Bold.otf");
         tvName.setTypeface(boldFont);
 
-
         tvUsername.setText("@" + tweet.getUser().getScreenName());
         tvName.setText(tweet.getUser().getName());
         String time = ParseRelativeDate.getRelativeTimeAgo(tweet.getCreatedAt());
@@ -50,6 +51,12 @@ public class TweetDetailActivity extends AppCompatActivity {
         ibProfile.setImageResource(0);
         Picasso.with(ibProfile.getContext() )
                 .load(tweet.getUser().getProfileImageUrl()).into(ibProfile);
+
+        if (tweet.getMainMediaUrl() != null) {
+            Picasso.with(ivTweetMedia.getContext()).load(tweet.getMainMediaUrl()).into(ivTweetMedia);
+        }
+
+
     }
 
 

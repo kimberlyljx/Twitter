@@ -60,21 +60,21 @@ public class TwitterClient extends OAuthBaseClient {
     public void getHomeTimeline(AsyncHttpResponseHandler handler) {
         String apiUrl = getApiUrl("statuses/home_timeline.json");
         RequestParams params = new RequestParams();
-        params.put("count", 10);
+        params.put("count", 20);
         getClient().get(apiUrl, params, handler);
     }
 
     public void getMentionsTimeline(AsyncHttpResponseHandler handler) {
         String apiUrl = getApiUrl("statuses/mentions_timeline.json");
         RequestParams params = new RequestParams();
-        params.put("count", 3);
+        params.put("count", 10);
         getClient().get(apiUrl, params, handler);
     }
 
     public void getMomentsTimeline(AsyncHttpResponseHandler handler) {
         String apiUrl = getApiUrl("statuses/mentions_timeline.json");
         RequestParams params = new RequestParams();
-        params.put("count", 3);
+        params.put("count", 10);
         getClient().get(apiUrl, params, handler);
     }
 
@@ -114,8 +114,23 @@ public class TwitterClient extends OAuthBaseClient {
         getClient().post(apiUrl, params, handler);
     }
 
+    public void postUnretweet(AsyncHttpResponseHandler handler, long id) {
+        String apiUrl = getApiUrl("statuses/unretweet.json");
+        RequestParams params = new RequestParams();
+        params.put("id", id);
+        params.put("trim_user", true);
+        getClient().post(apiUrl, params, handler);
+    }
+
     public void postFavorite(AsyncHttpResponseHandler handler, long id) {
         String apiUrl = getApiUrl("favorites/create.json");
+        RequestParams params = new RequestParams();
+        params.put("id", id);
+        getClient().post(apiUrl, params, handler);
+    }
+
+    public void destroyFavorite(AsyncHttpResponseHandler handler, long id) {
+        String apiUrl = getApiUrl("favorites/destroy.json");
         RequestParams params = new RequestParams();
         params.put("id", id);
         getClient().post(apiUrl, params, handler);
