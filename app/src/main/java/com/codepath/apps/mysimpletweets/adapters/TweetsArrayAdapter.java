@@ -1,20 +1,33 @@
 package com.codepath.apps.mysimpletweets.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.codepath.apps.mysimpletweets.ParseRelativeDate;
 import com.codepath.apps.mysimpletweets.R;
+import com.codepath.apps.mysimpletweets.TwitterApplication;
+import com.codepath.apps.mysimpletweets.TwitterClient;
+import com.codepath.apps.mysimpletweets.activities.ComposeActivity;
 import com.codepath.apps.mysimpletweets.models.Tweet;
+import com.codepath.apps.mysimpletweets.models.User;
+import com.loopj.android.http.JsonHttpResponseHandler;
 import com.squareup.picasso.Picasso;
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import cz.msebera.android.httpclient.Header;
 
 /**
  * Created by klimjinx on 6/27/16.
@@ -47,6 +60,7 @@ public class TweetsArrayAdapter extends RecyclerView.Adapter<TweetsArrayAdapter.
         private TextView tvUsername;
         private TextView tvBody;
         private TextView tvTimestamp;
+        private ImageButton ibReply;
 
         // We also create a constructor that accepts the entire item row
         // and does the view lookups to find each subview
@@ -55,10 +69,12 @@ public class TweetsArrayAdapter extends RecyclerView.Adapter<TweetsArrayAdapter.
             // to access the context from any ViewHolder instance.
             super(itemView);
             ivProfile = (ImageView) itemView.findViewById(R.id.ibProfile);
+            ibReply = (ImageButton) itemView.findViewById(R.id.ibReply);
             tvUsername = (TextView) itemView.findViewById(R.id.tvUsername);
             tvName = (TextView) itemView.findViewById(R.id.tvName);
             tvBody = (TextView) itemView.findViewById(R.id.tvBody);
             tvTimestamp = (TextView) itemView.findViewById(R.id.tvTimestamp);
+
         }
 
         // Handles the row being being clicked
@@ -88,7 +104,33 @@ public class TweetsArrayAdapter extends RecyclerView.Adapter<TweetsArrayAdapter.
     @Override
     public void onBindViewHolder(TweetsArrayAdapter.ViewHolder viewHolder, int position) {
         // Get the data model based on position
-        Tweet tweet = amTweets.get(position);
+        final Tweet tweet = amTweets.get(position);
+
+        ImageButton ibReply = viewHolder.ibReply;
+        ibReply.setTag(tweet);
+        ibReply.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TwitterClient client = TwitterApplication.getRestClient();
+                client.getMyInfo(new JsonHttpResponseHandler() {
+                    @Override
+                    public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                        User user = User.fromJSON (response);
+                        Log.d("Reply", response.toString());
+                    }
+                    @Override
+                    public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                        Log.d("Reply", errorResponse.toString());
+                    }
+                });
+                Toast.makeText(mContext, "Reply ", Toast.LENGTH_SHORT).show();
+
+                Intent i = new Intent( mContext, ComposeActivity.class);
+                i.putExtra("tweetID", tweet.getUid() );
+                i.putExtra("tweetUser", tweet.getUser().getScreenName() );
+                mContext.startActivity(i);
+            }
+        });
 
         // Set item views based on your views and data model
         TextView tvUsername = viewHolder.tvUsername;

@@ -58,6 +58,40 @@ public class TweetsListFragment extends Fragment {
                 }
         );
 
+//        rvTweets.findViewById(R.id.ibRetweet).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                TwitterClient client = TwitterApplication.getRestClient();
+//                client.postRetweet(new JsonHttpResponseHandler() {
+//                    @Override
+//                    public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+//                        Log.d("Reply", response.toString());
+//                    }
+//                    @Override
+//                    public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+//                        Log.d("Reply", errorResponse.toString());
+//                    }
+//                }, ID );
+//            }
+//        });
+//
+//        rvTweets.findViewById(R.id.ibLike).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                TwitterClient client = TwitterApplication.getRestClient();
+//                client.postFavorite(new JsonHttpResponseHandler() {
+//                    @Override
+//                    public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+//                        Log.d("Reply", response.toString());
+//                    }
+//                    @Override
+//                    public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+//                        Log.d("Reply", errorResponse.toString());
+//                    }
+//                }, ID );
+//            }
+//        });
+
         swipeContainer = (SwipeRefreshLayout) view.findViewById(R.id.swipeContainer);
 
         // Configure the refreshing colors

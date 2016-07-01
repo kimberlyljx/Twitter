@@ -72,6 +72,7 @@ public class HomeTimelineFragment extends TweetsListFragment {
             }
         });
     }
+
     public void appendTweet(Tweet tweet) {
         mTweets.add(0, tweet);
         aTweets.notifyItemInserted(0);

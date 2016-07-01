@@ -71,6 +71,7 @@
         android:id="@+id/ibRetweet"
         android:layout_marginRight="15dp"
         android:src="@drawable/ic_retweet"
+        android:onClick="retweetToTweet"
         android:layout_alignBottom="@+id/ibReply"
         android:layout_toRightOf="@+id/ibReply"
         android:layout_toEndOf="@+id/ibReply" />
@@ -81,6 +82,7 @@
         android:background="@android:color/white"
         android:id="@+id/ibLike"
         android:src="@drawable/ic_heart"
+        android:onClick="likeTweet"
         android:layout_toRightOf="@+id/ibRetweet"
         android:layout_alignBottom="@+id/ibReply"/>
 </RelativeLayout>
