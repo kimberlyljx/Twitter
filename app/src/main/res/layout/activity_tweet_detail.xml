@@ -67,6 +67,15 @@
         android:layout_toRightOf="@+id/ibProfile"
         android:layout_toEndOf="@+id/ibProfile" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Text"
+        android:id="@+id/tvCount"
+        android:layout_marginTop="15dp"
+        android:layout_below="@+id/tvTimestamp"
+        android:layout_alignLeft="@+id/tvTimestamp"
+        android:layout_alignStart="@+id/tvTimestamp" />
 
     <Button
         android:layout_width="wrap_content"
@@ -110,18 +119,9 @@
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
         android:paddingBottom="15dp"
+        android:background="@android:color/white"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="New Text"
-        android:id="@+id/tvCount"
-        android:layout_marginTop="15dp"
-        android:layout_below="@+id/tvTimestamp"
-        android:layout_alignLeft="@+id/tvTimestamp"
-        android:layout_alignStart="@+id/tvTimestamp" />
 
     <ListView
         android:layout_width="wrap_content"

@@ -83,7 +83,7 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/follow"
+            android:text="Follow"
             android:id="@+id/btnFollowOrSetup"
             android:layout_alignTop="@+id/ibProfile"
             android:layout_alignParentRight="true"
@@ -92,7 +92,6 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/website"
             android:id="@+id/tvWebsite"
             android:layout_marginLeft="15dp"
             android:layout_below="@+id/tvDescription"

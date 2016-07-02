@@ -105,46 +105,6 @@ public class ComposeActivity extends AppCompatActivity {
         }
     }
 
-//    public void onClick(View view) {
-//        //handle home and send button clicks
-//        //find out which view has been clicked
-//        switch (view.getId()) {
-//            case R.id.btnSend:
-//                //send tweet
-//                String toTweet = etTweet.getText().toString();
-//
-//                //handle replies
-//                if( tweetName.length() > 0) {
-////                    client.postStatusUpdate( new StatusUpdate(toTweet).inReplyToStatusId(tweetID) );
-//                } else {
-//                    //handle normal tweets
-//                    client.postStatusUpdate( new JsonHttpResponseHandler() {
-//                        @Override
-//                        public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-//                            // Deserialize Json and load model date into listview'
-//                            Log.d("JSON", response.toString());
-//                            Tweet tweet = Tweet.fromJSON(response);
-//                            Intent data = new Intent();
-//                            data.putExtra("tweet", Parcels.wrap(tweet));
-//                            setResult(RESULT_OK, data); // set result code and bundle data for response
-//                            finish(); // closes the activity, pass data to parent
-//                        }
-//
-//                        @Override
-//                        public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-//                            Log.d("JSON", errorResponse.toString());
-//                        }
-//                    } , toTweet);
-//                }
-//
-//                //reset the edit text
-//                etTweet.setText("");
-//                break;
-//            default:
-//                break;
-//        }
-//    }
-
     public void cancelTweet(View view) {
         finish();
     }

@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.codepath.apps.mysimpletweets.ParseRelativeDate;
 import com.codepath.apps.mysimpletweets.R;
 import com.codepath.apps.mysimpletweets.TwitterApplication;
@@ -93,6 +94,8 @@ public class TweetsArrayAdapter extends RecyclerView.Adapter<TweetsArrayAdapter.
             tvBody.setTypeface(font);
             tvTimestamp.setTypeface(font);
             tvName.setTypeface(boldFont);
+            ibLike.setTypeface(boldFont);
+            ibRetweet.setTypeface(boldFont);
         }
 
         // Handles the row being being clicked
@@ -132,6 +135,7 @@ public class TweetsArrayAdapter extends RecyclerView.Adapter<TweetsArrayAdapter.
                 Intent i = new Intent( mContext, ComposeActivity.class);
                 i.putExtra("tweetID", tweet.getUid() );
                 i.putExtra("tweetUser", tweet.getUser().getScreenName());
+                i.putExtra("profilePic", tweet.getUser().getProfileImageUrl());
                 mContext.startActivity(i);
             }
         });
@@ -146,7 +150,7 @@ public class TweetsArrayAdapter extends RecyclerView.Adapter<TweetsArrayAdapter.
                     client.postRetweet(new JsonHttpResponseHandler() {
                         @Override
                         public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                            int imgResource = R.drawable.ic_green_retweet;
+                            int imgResource = R.drawable.ic_retweet;
                             ibRetweet.setCompoundDrawablesWithIntrinsicBounds(imgResource, 0, 0, 0);
                         }
 
@@ -160,7 +164,7 @@ public class TweetsArrayAdapter extends RecyclerView.Adapter<TweetsArrayAdapter.
                     client.postUnretweet(new JsonHttpResponseHandler() {
                         @Override
                         public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                            int imgResource = R.drawable.ic_retweet;
+                            int imgResource = R.drawable.ic_green_retweet;
                             ibRetweet.setCompoundDrawablesWithIntrinsicBounds(imgResource, 0, 0, 0);
                         }
                         @Override
@@ -230,8 +234,9 @@ public class TweetsArrayAdapter extends RecyclerView.Adapter<TweetsArrayAdapter.
                 .load(tweet.getUser().getProfileImageUrl()).into(ivProfile);
 
         ImageView ivTweetMedia = viewHolder.ivTweetMedia;
+        ivTweetMedia.setImageResource(0);
         if (tweet.getMainMediaUrl() != null) {
-            Picasso.with(ivTweetMedia.getContext()).load(tweet.getMainMediaUrl()).into(ivTweetMedia);
+            Glide.with(ivTweetMedia.getContext()).load(tweet.getMainMediaUrl()).into(ivTweetMedia);
         }
 
         if (tweet.getFavorited()) {
@@ -246,7 +251,7 @@ public class TweetsArrayAdapter extends RecyclerView.Adapter<TweetsArrayAdapter.
             int imgResource = R.drawable.ic_green_retweet;
             viewHolder.ibRetweet.setCompoundDrawablesWithIntrinsicBounds(imgResource, 0, 0, 0);
         }
-        if (tweet.getFavoritesCount() != 0) viewHolder.ibRetweet.setText(Integer.toString(tweet.getRetweetCount()));
+        if (tweet.getRetweetCount() != 0) viewHolder.ibRetweet.setText(Integer.toString(tweet.getRetweetCount()));
 
     }
 

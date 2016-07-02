@@ -73,9 +73,4 @@ public class LikesFragment extends TweetsListFragment {
         }, screenName);
     }
 
-    public void appendTweet(Tweet tweet) {
-        mTweets.add(0, tweet);
-        aTweets.notifyItemInserted(0);
-        rvTweets.scrollToPosition(0);
-    }
 }

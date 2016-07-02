@@ -21,6 +21,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.codepath.apps.mysimpletweets.R;
 import com.codepath.apps.mysimpletweets.TwitterApplication;
 import com.codepath.apps.mysimpletweets.TwitterClient;
@@ -30,7 +31,6 @@ import com.codepath.apps.mysimpletweets.fragments.HomeTimelineFragment;
 import com.codepath.apps.mysimpletweets.models.Tweet;
 import com.codepath.apps.mysimpletweets.models.User;
 import com.loopj.android.http.JsonHttpResponseHandler;
-import com.squareup.picasso.Picasso;
 
 import org.json.JSONObject;
 
@@ -152,7 +152,7 @@ public class TimelineActivity extends AppCompatActivity {
     }
 
     private void setNavProfile(User user) {
-        Picasso.with(this).load(user.getProfileImageUrl()).into(ivNavProfile);
+        Glide.with(this).load(user.getProfileImageUrl()).into(ivNavProfile);
         tvNavName.setText(user.getName());
         tvNavUsername.setText("@" + user.getScreenName());
 

@@ -64,28 +64,28 @@
         android:layout_toRightOf="@+id/ibProfile"
         android:layout_below="@+id/tvBody"
         android:layout_alignRight="@+id/tvTimestamp"
-        android:layout_alignEnd="@+id/ibLike" />
+        android:layout_alignEnd="@+id/tvTimestamp"
+        android:adjustViewBounds="true"
+        android:scaleType="fitCenter" />
 
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="40dp"
+        android:layout_height="30dp"
         android:background="@android:color/white"
         android:id="@+id/ibReply"
         android:layout_below="@id/ivTweetMedia"
-        android:layout_marginRight="20dp"
+        android:layout_marginRight="40dp"
         android:stateListAnimator="@null"
         android:layout_toRightOf="@+id/ibProfile"
         android:drawableLeft="@drawable/ic_reply" />
 
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="60dp"
+        android:layout_height="30dp"
         android:background="@android:color/white"
         android:id="@+id/ibRetweet"
         android:layout_marginRight="20dp"
         android:gravity="center_vertical"
-        android:textAlignment="viewStart"
-        android:textColor="@color/reply_green"
         android:stateListAnimator="@null"
         android:drawableLeft="@drawable/ic_retweet"
         android:layout_alignBottom="@+id/ibReply"
@@ -93,8 +93,8 @@
         android:layout_toEndOf="@+id/ibReply" />
 
     <Button
-        android:layout_width="50dp"
-        android:layout_height="wrap_content"
+        android:layout_width="60dp"
+        android:layout_height="30dp"
         android:background="@android:color/white"
         android:id="@+id/ibLike"
         android:stateListAnimator="@null"

@@ -13,7 +13,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import com.codepath.apps.mysimpletweets.R;
 import com.codepath.apps.mysimpletweets.adapters.SearchFragmentPagerAdapter;
@@ -73,8 +72,6 @@ public class SearchActivity extends AppCompatActivity {
             @Override
             public void onPageSelected(int position) {
                 viewPager.setCurrentItem(position);
-                Toast.makeText(SearchActivity.this,
-                        "Selected page position: " + position, Toast.LENGTH_SHORT).show();
             }
             // This method will be invoked when the current page is scrolled
             @Override

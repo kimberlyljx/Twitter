@@ -4,10 +4,11 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.widget.ImageButton;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.codepath.apps.mysimpletweets.ParseRelativeDate;
 import com.codepath.apps.mysimpletweets.R;
 import com.codepath.apps.mysimpletweets.models.Tweet;
@@ -25,6 +26,9 @@ public class TweetDetailActivity extends AppCompatActivity {
     @BindView(R.id.tvBody) TextView tvBody;
     @BindView(R.id.tvTimestamp) TextView tvTimestamp;
     @BindView(R.id.tvCount) TextView tvCount;
+    @BindView(R.id.ibReply) Button ibReply;
+    @BindView(R.id.ibRetweet)Button ibRetweet;
+    @BindView(R.id.ibLike)Button ibLike;
 
     private Tweet tweet;
 
@@ -46,41 +50,35 @@ public class TweetDetailActivity extends AppCompatActivity {
         tvUsername.setText("@" + tweet.getUser().getScreenName());
         tvName.setText(tweet.getUser().getName());
         String time = ParseRelativeDate.getRelativeTimeAgo(tweet.getCreatedAt());
-        tvTimestamp.setText(parseString(time));
+        tvTimestamp.setText(time);
         tvBody.setText(tweet.getBody());
         ibProfile.setTag(tweet.getUser());
         ibProfile.setImageResource(0);
         Picasso.with(ibProfile.getContext() )
                 .load(tweet.getUser().getProfileImageUrl()).into(ibProfile);
 
-        if (tweet.getMainMediaUrl() != null) {
-            Picasso.with(ivTweetMedia.getContext()).load(tweet.getMainMediaUrl()).into(ivTweetMedia);
-        }
+        Integer retweetCount = tweet.getRetweetCount();
+        Integer favouritesCount = tweet.getFavoritesCount();
 
+        String count = Integer.toString(retweetCount) + " RETWEETS    " +  Integer.toString(favouritesCount) + " LIKES";
+
+        tvCount.setText(count);
+        ivTweetMedia.setImageResource(0);
+        if (tweet.getMainMediaUrl() != null) {
+            Glide.with(ivTweetMedia.getContext()).load(tweet.getMainMediaUrl()).into(ivTweetMedia);
+        }
         if (tweet.getFavorited()) {
             int imgResource = R.drawable.ic_red_heart;
-            viewHolder.ibLike.setCompoundDrawablesWithIntrinsicBounds(imgResource, 0, 0, 0);
+            ibLike.setCompoundDrawablesWithIntrinsicBounds(imgResource, 0, 0, 0);
         }
-
-        if (tweet.getFavoritesCount() != 0) viewHolder.ibLike.setText(Integer.toString(tweet.getFavoritesCount()));
-
-
+        if (tweet.getFavoritesCount() != 0)
+            ibLike.setText(Integer.toString(tweet.getFavoritesCount()));
         if (tweet.getRetweeted()) {
             int imgResource = R.drawable.ic_green_retweet;
-            viewHolder.ibRetweet.setCompoundDrawablesWithIntrinsicBounds(imgResource, 0, 0, 0);
+            ibRetweet.setCompoundDrawablesWithIntrinsicBounds(imgResource, 0, 0, 0);
         }
-        if (tweet.getFavoritesCount() != 0) viewHolder.ibRetweet.setText(Integer.toString(tweet.getRetweetCount()));
+        if (tweet.getRetweetCount() != 0) ibRetweet.setText(Integer.toString(tweet.getRetweetCount()));
 
-    }
-
-
-    public String parseString(String timestamp) {
-        timestamp = timestamp.replace("Yesterday", "1d");
-        timestamp = timestamp.replace(" minutes ago", "m");
-        timestamp = timestamp.replace(" hours ago", "h");
-        timestamp = timestamp.replace(" days ago", "d");
-        timestamp = timestamp.replace(" seconds ago", "s");
-        return timestamp;
     }
 
 }

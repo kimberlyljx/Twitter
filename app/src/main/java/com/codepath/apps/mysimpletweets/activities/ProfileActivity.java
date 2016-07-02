@@ -14,7 +14,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.codepath.apps.mysimpletweets.R;
 import com.codepath.apps.mysimpletweets.TwitterApplication;
@@ -154,8 +153,6 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void onPageSelected(int position) {
                 viewPager.setCurrentItem(position);
-                Toast.makeText(ProfileActivity.this,
-                        "Selected page position: " + position, Toast.LENGTH_SHORT).show();
             }
             // This method will be invoked when the current page is scrolled
             @Override
